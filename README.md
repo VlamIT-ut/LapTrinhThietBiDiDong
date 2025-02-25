@@ -11,6 +11,7 @@ II. Tính năng chính
   3. Theo dõi đơn hàng: Xem trạng thái đơn hàng theo thời gian thực.
   4. Quản lý tài khoản: Đăng nhập, đăng ký và cập nhật thông tin cá nhân.
   5. Thanh toán: Hỗ trợ thanh toán qua nhiều phương thức (giả lập).
+     
 III. Công nghệ sử dụng
   1. Ngôn ngữ lập trình: Kotlin
   2. UI Framework: Jetpack Compose
@@ -26,6 +27,7 @@ IV. Yêu cầu cài đặt
   - Android SDK 21 trở lên
   - Kotlin 1.8 hoặc cao hơn
   - Gradle 7.0 hoặc cao hơn
+    
 V. Hướng dẫn cài đặt và chạy dự án
   - Clone repository:
     git clone https://github.com/VlamIT-ut/LapTrinhThietBiDiDong.git
