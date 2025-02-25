@@ -20,13 +20,14 @@ III. Công nghệ sử dụng
   6. Dependency Injection: Hilt
   7. Quản lý trạng thái: LiveData/ViewModel
   8. Công cụ xây dựng: Android Studio
+     
 IV. Yêu cầu cài đặt
-  Android Studio (phiên bản mới nhất khuyến nghị)
-  Android SDK 21 trở lên
-  Kotlin 1.8 hoặc cao hơn
-  Gradle 7.0 hoặc cao hơn
+  - Android Studio (phiên bản mới nhất khuyến nghị)
+  - Android SDK 21 trở lên
+  - Kotlin 1.8 hoặc cao hơn
+  - Gradle 7.0 hoặc cao hơn
 V. Hướng dẫn cài đặt và chạy dự án
-  Clone repository:
-  git clone https://github.com/VlamIT-ut/LapTrinhThietBiDiDong.git
-  Mở dự án trong Android Studio:
-  Mở Android Studio, chọn "Open an existing project" và chọn thư mục vừa clone.
+  - Clone repository:
+    git clone https://github.com/VlamIT-ut/LapTrinhThietBiDiDong.git
+  - Mở dự án trong Android Studio:
+  - Mở Android Studio, chọn "Open an existing project" và chọn thư mục vừa clone.
