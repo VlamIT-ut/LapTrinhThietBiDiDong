@@ -34,6 +34,6 @@ V. Hướng dẫn cài đặt và chạy dự án
   - Mở dự án trong Android Studio:
   - Mở Android Studio, chọn "Open an existing project" và chọn thư mục vừa clone.
 
-VI. Dự án cho ứng dụng này:
+VI. Tổng hợp: Đề tài, ý tưởng, nghiên cứu và phân tích: 
     https://docs.google.com/document/d/1xaKC8XDljPosAC4i7h9qhgb8YQ4b236CYbCkGqpGMso/edit?tab=t.0#heading=h.1t3h5sf
 
