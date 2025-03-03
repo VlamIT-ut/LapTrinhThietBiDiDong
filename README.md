@@ -38,5 +38,5 @@ VI. Tổng hợp: Đề tài, ý tưởng, nghiên cứu và phân tích:
     https://docs.google.com/document/d/1xaKC8XDljPosAC4i7h9qhgb8YQ4b236CYbCkGqpGMso/edit?tab=t.0#heading=h.1t3h5sf
 
 VII. Thiết Kế UI/UX
-    link figma thiết kế: https://www.figma.com/design/9rcu6ft2Cdb2pzri2E1cTb/App-Food?node-id=0-1&t=ETJBQLP8PtNbdGIR-1
+    link figma thiết kế:https://www.figma.com/design/9rcu6ft2Cdb2pzri2E1cTb/App-Food?node-id=0-1&t=br8WYSHTFvawshz8-1
 
