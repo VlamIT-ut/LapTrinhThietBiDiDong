@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.appfood.foodDelivery.ui.AppNavigation
-import com.example.appfood.ui.theme.AppFoodTheme
+import com.example.appfood.view.navigation.AppNavigation
+import com.example.appfood.view.ui.theme.AppFoodTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

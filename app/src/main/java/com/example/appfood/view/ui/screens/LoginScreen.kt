@@ -1,4 +1,4 @@
-package com.example.appfood.foodDelivery.ui.screens
+package com.example.appfood.view.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
