@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.credentials.CredentialManager
 import com.example.appfood.view.navigation.AppNavigation
 import com.example.appfood.view.ui.theme.AppFoodTheme
@@ -13,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfood.model.data.repository.LoginRepository
+
 
 class MainActivity : ComponentActivity() {
     private val authViewModel: AuthViewModel by viewModels {
@@ -29,7 +32,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AppFoodTheme {
-                AppNavigation(authViewModel)
+           AppNavigation(authViewModel)
             }
         }
     }
@@ -38,6 +41,11 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         authViewModel.checkCurrentUser()
     }
+}
+@Composable
+@Preview(showBackground = true)
+fun GreetingPreview() {
+
 }
 
 class AuthViewModelFactory(private val repository: LoginRepository) : ViewModelProvider.Factory {

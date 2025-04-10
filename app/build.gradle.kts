@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.googleid)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,4 +68,18 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation ("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.2.2") // Check for the latest version
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.28.0")
+    implementation("com.google.accompanist:accompanist-pager:0.28.0") // Check for the latest version
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.compose.runtime:runtime-livedata:x.x.x")
+    implementation("com.github.bumptech.glide:glide:4.13.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
+    implementation("androidx.compose.foundation:foundation:1.7.0")
+    implementation("com.google.firebase:firebase-database:21.0.0")
+    implementation("androidx.compose.foundation:foundation-android:1.7.8")
+    implementation ("com.google.accompanist:accompanist-insets:0.28.0")
+    implementation ("com.google.accompanist:accompanist-insets-ui:0.28.0")
+
 }

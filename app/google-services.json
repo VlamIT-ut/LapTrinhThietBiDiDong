@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "780462432833",
+    "firebase_url": "https://fooddelivery-b4739-default-rtdb.firebaseio.com",
     "project_id": "fooddelivery-b4739",
     "storage_bucket": "fooddelivery-b4739.firebasestorage.app"
   },
