@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appfood.view.ui.screens.main.HomeScreen
 import com.example.appfood.view.ui.screens.login_signup.LoginScreen
-import com.example.appfood.view.ui.main.ProfileScreen
+import com.example.appfood.view.ui.screens.main.ProfileScreen
 import com.example.appfood.view.ui.screens.login_signup.SignUpScreen
+import com.example.appfood.view.ui.screens.main.CartScreen
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen1
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen2
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen3
@@ -23,6 +25,12 @@ fun AppNavigation(viewModel: AuthViewModel?) {
         composable("get_started_3") { GetStartedScreen3(navController) }
         composable("login") { LoginScreen(navController, viewModel ?: return@composable) }
         composable("sign_up") { SignUpScreen(navController, viewModel ?: return@composable) }
+        composable("home") { HomeScreen(navController) }
+        composable("cart_screen") {
+            CartScreen(
+                navController = navController
+            )
+        }
         composable("profile") { ProfileScreen(navController, viewModel ?: return@composable) }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.appfood
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -17,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.appfood.model.data.repository.LoginRepository
 
 
-class MainActivity : ComponentActivity() {
+open class MainActivity : ComponentActivity() {
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory(
             LoginRepository(
@@ -29,6 +30,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+        )
         enableEdgeToEdge()
         setContent {
             AppFoodTheme {

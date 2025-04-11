@@ -1,4 +1,4 @@
-package com.example.appfood.view.ui.main
+package com.example.appfood.view.ui.screens.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -51,7 +51,7 @@ fun ProfileScreen(navController: NavController, viewModel: AuthViewModel) {
         }
         },
             backgroundColor = Color.White) },
-        bottomBar = { MyBottomBar() },
+        bottomBar = { MyBottomBar(navController) },
         content = { innerPadding ->
             LazyColumn(
                 modifier = Modifier

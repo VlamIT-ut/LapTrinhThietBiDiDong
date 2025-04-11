@@ -164,8 +164,8 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                     is AuthState.Loading -> CircularProgressIndicator()
                     is AuthState.Success -> {
                         LaunchedEffect(Unit) {
-                            navController.navigate("profile") {
-                                popUpTo("welcome") { inclusive = true }
+                            navController.navigate("home") {
+                                popUpTo("login") { inclusive = true }
                             }
                         }
                     }
