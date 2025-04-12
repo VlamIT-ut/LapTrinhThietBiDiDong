@@ -81,5 +81,7 @@ dependencies {
     implementation("androidx.compose.foundation:foundation-android:1.7.8")
     implementation ("com.google.accompanist:accompanist-insets:0.28.0")
     implementation ("com.google.accompanist:accompanist-insets-ui:0.28.0")
+    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation ("com.google.android.gms:play-services-auth:21.0.0")
 
 }
