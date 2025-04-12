@@ -35,10 +35,16 @@ fun ProfileScreen(navController: NavController, viewModel: AuthViewModel) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize().statusBarsPadding(),
-        topBar = {TopAppBar(title = { Box(){
+        topBar = {TopAppBar(title = { Box(modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center){
             Row(verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()) {
+                Image(
+                    painterResource(R.drawable.back_grey),
+                    contentDescription = null,
+                    modifier = Modifier.clickable { navController.popBackStack() }
+                )
                 Text(
                     text = "Profile",
                     fontSize = 24.sp,
@@ -46,19 +52,20 @@ fun ProfileScreen(navController: NavController, viewModel: AuthViewModel) {
                     color = colorResource(R.color.orange),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.width(48.dp))
             }
 
         }
         },
-            backgroundColor = Color.White) },
+            backgroundColor = colorResource(R.color.grey)) },
         bottomBar = { MyBottomBar(navController) },
         content = { innerPadding ->
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(16.dp), // Apply innerPadding to avoid overlap
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 item {
                     // User Info

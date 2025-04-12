@@ -1,19 +1,27 @@
 package com.example.appfood.view.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appfood.view.helper.ManagmentCart
+import com.example.appfood.view.ui.screens.main.ItemsListScreen
 import com.example.appfood.view.ui.screens.main.HomeScreen
 import com.example.appfood.view.ui.screens.login_signup.LoginScreen
 import com.example.appfood.view.ui.screens.main.ProfileScreen
 import com.example.appfood.view.ui.screens.login_signup.SignUpScreen
 import com.example.appfood.view.ui.screens.main.CartScreen
+import com.example.appfood.view.ui.screens.main.DetailFoodScreen
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen1
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen2
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen3
 import com.example.appfood.view.ui.screens.splash.SplashScreen
 import com.example.appfood.viewModel.AuthViewModel
+import com.example.appfood.viewModel.MainViewModel
 
 @Composable
 fun AppNavigation(viewModel: AuthViewModel?) {
@@ -26,11 +34,46 @@ fun AppNavigation(viewModel: AuthViewModel?) {
         composable("login") { LoginScreen(navController, viewModel ?: return@composable) }
         composable("sign_up") { SignUpScreen(navController, viewModel ?: return@composable) }
         composable("home") { HomeScreen(navController) }
-        composable("cart_screen") {
-            CartScreen(
-                navController = navController
+        composable("items_list/{id}/{title}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id") ?: ""
+            val title = backStackEntry.arguments?.getString("title") ?: ""
+
+            // Đảm bảo bạn lấy đúng ViewModel cho composable này
+            val viewModel= MainViewModel()
+
+            ItemsListScreen(
+                title = title,
+                navController = navController,
+                viewModel = viewModel,
+                id = id,
+                onBackClick = { navController.popBackStack() }
             )
         }
+
+        composable("cart_screen") {
+            CartScreen(
+                navController = navController, managementCart = ManagmentCart(context = LocalContext.current)
+            )
+        }
+        composable("detail/{foodId}") { backStackEntry ->
+            val foodId = backStackEntry.arguments?.getString("foodId") ?: ""
+            val viewModel = MainViewModel()
+
+            val foodList by viewModel.loadFiltered(foodId).observeAsState()
+
+            if (foodList != null && foodList!!.isNotEmpty()) {
+                val foodItem = foodList!!.first() // Assuming foodId gives one item
+                DetailFoodScreen(
+                    item = foodItem,
+                    onBackClick = { navController.popBackStack() },
+                    onAddToCartClick = { /* Optional: show toast or navigate */ }
+                )
+            } else {
+                Text("Loading...")
+            }
+        }
+
         composable("profile") { ProfileScreen(navController, viewModel ?: return@composable) }
+
     }
 }

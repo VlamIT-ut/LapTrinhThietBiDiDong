@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.credentials.CredentialManager
 import com.example.appfood.view.navigation.AppNavigation
-import com.example.appfood.view.ui.theme.AppFoodTheme
 import com.example.appfood.viewModel.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 import androidx.lifecycle.ViewModel
@@ -36,9 +35,8 @@ open class MainActivity : ComponentActivity() {
         )
         enableEdgeToEdge()
         setContent {
-            AppFoodTheme {
+
            AppNavigation(authViewModel)
-            }
         }
     }
 

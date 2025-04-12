@@ -51,10 +51,10 @@ fun TopBar(){
         ){
             Text(text= buildAnnotatedString {
                 withStyle(style = SpanStyle(color = Color.Red)){
-                    append("EASY")
+                    append("FOOD")
                 }
                 withStyle(style = SpanStyle(color = Color.Black)){
-                    append("FOOD")
+                    append("DELIVERY")
                 }
 
             },

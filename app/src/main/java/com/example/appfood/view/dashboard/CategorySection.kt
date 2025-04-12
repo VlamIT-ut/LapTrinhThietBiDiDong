@@ -1,6 +1,5 @@
 package com.example.appfood.view.dashboard
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,17 +18,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.appfood.R
 import com.example.appfood.model.domain.CategoryModel
-import com.example.appfood.view.itemsList.ItemsListActivity
 @Composable
-fun CategorySection(categories: SnapshotStateList<CategoryModel>, showCategoryLoading: Boolean) {
+fun CategorySection(categories: SnapshotStateList<CategoryModel>, showCategoryLoading: Boolean,
+                    navController: NavController
+) {
     Text(
         text = "Choose Category",
         fontSize = 18.sp,
@@ -49,7 +49,6 @@ fun CategorySection(categories: SnapshotStateList<CategoryModel>, showCategoryLo
     } else {
         // Other code here
         val rows = categories.chunked(3)
-        val context = LocalContext.current
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
@@ -67,12 +66,7 @@ fun CategorySection(categories: SnapshotStateList<CategoryModel>, showCategoryLo
                                 .weight(1f)
                                 .padding(horizontal = 8.dp),
                             onItemClick = {
-                                val intent = Intent(context, ItemsListActivity::class.java).apply {
-                                    putExtra("id", categoryModel.Id.toString())
-                                    putExtra("title", categoryModel.Name)
-                                }
-                                context.startActivity(intent)
-                                // Handle item click
+                                navController.navigate("items_list/${categoryModel.Id}/${categoryModel.Name}")
                             }
                         )
                     }
