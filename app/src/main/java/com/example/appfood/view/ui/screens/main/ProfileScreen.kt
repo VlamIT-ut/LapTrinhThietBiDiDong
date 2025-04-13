@@ -112,7 +112,7 @@ fun ProfileScreen(navController: NavController, viewModel: AuthViewModel) {
                 item {
                     ProfileMenuItem(iconRes = R.drawable.ic_logout, title = "Log out", iconTint = Color.Red) {
                         viewModel.signOut()
-                        navController.navigate("welcome") {
+                        navController.navigate("login") {
                             popUpTo("home") { inclusive = true }
                         }
                     }

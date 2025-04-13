@@ -2,6 +2,8 @@ package com.example.appfood.view.navigation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
@@ -28,8 +30,22 @@ import com.example.appfood.viewModel.MainViewModel
 fun AppNavigation(viewModel: AuthViewModel?) {
     val navController = rememberNavController()
     val mainViewModel = MainViewModel()
-    NavHost(navController = navController, startDestination = "welcome") {
-        composable("welcome") { SplashScreen(navController) }
+    val isLoggedIn = viewModel?.isLoggedIn?.collectAsState(initial = false)?.value ?: false
+    val isFirstLaunch = viewModel?.isFirstLaunch?.collectAsState(initial = true)?.value ?: true
+    val startDestination = when {
+        isFirstLaunch -> "welcome"
+        isLoggedIn -> "home"
+        else -> "login"
+    }
+
+    NavHost(navController = navController,startDestination = startDestination ) {
+        composable("welcome") {
+            // Màn Splash chỉ hiển thị lần đầu
+            SplashScreen(navController)
+            LaunchedEffect(Unit) {
+                viewModel?.completeFirstLaunch()  // Cập nhật không còn là lần đầu
+            }
+        }
         composable("get_started_1") { GetStartedScreen1(navController) }
         composable("get_started_2") { GetStartedScreen2(navController) }
         composable("get_started_3") { GetStartedScreen3(navController) }

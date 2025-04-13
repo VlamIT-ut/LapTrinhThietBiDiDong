@@ -83,5 +83,6 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-insets-ui:0.28.0")
     implementation ("com.google.firebase:firebase-auth-ktx")
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
 }
