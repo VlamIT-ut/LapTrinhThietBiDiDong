@@ -66,16 +66,16 @@ class MainRepository {
     }
     fun loadFiltered(id: String): LiveData<MutableList<FoodModel>> {
         val listData = MutableLiveData<MutableList<FoodModel>>()
-        val ref = firebaseDatabase.getReference( "Foods")
+        val ref = firebaseDatabase.getReference("Foods")
         val query: Query = ref.orderByChild("CategoryId").equalTo(id)
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val lists = mutableListOf<FoodModel>()
                 for (childSnapshot in snapshot.children) {
-                    val list = childSnapshot.getValue(FoodModel::class.java)
-                    if (list != null) {
-                        lists.add(list)
+                    val food = childSnapshot.getValue(FoodModel::class.java)
+                    food?.let {
+                        lists.add(it)
                     }
                 }
                 listData.value = lists
@@ -83,11 +83,27 @@ class MainRepository {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Failed to load foods: ${error.message}")
-
             }
         })
 
         return listData
+    }
+    fun loadFoodDetail(foodId: String): MutableLiveData<FoodModel?> {
+        val foodData = MutableLiveData<FoodModel?>()
+        val ref = firebaseDatabase.getReference("Foods").child(foodId)
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val food = snapshot.getValue(FoodModel::class.java)
+                foodData.value = food
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Failed to load food detail: ${error.message}")
+            }
+        })
+
+        return foodData
     }
 
 }

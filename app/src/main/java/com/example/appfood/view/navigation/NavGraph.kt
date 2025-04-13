@@ -26,6 +26,7 @@ import com.example.appfood.viewModel.MainViewModel
 @Composable
 fun AppNavigation(viewModel: AuthViewModel?) {
     val navController = rememberNavController()
+    val mainViewModel = MainViewModel()
     NavHost(navController = navController, startDestination = "welcome") {
         composable("welcome") { SplashScreen(navController) }
         composable("get_started_1") { GetStartedScreen1(navController) }
@@ -39,12 +40,11 @@ fun AppNavigation(viewModel: AuthViewModel?) {
             val title = backStackEntry.arguments?.getString("title") ?: ""
 
             // Đảm bảo bạn lấy đúng ViewModel cho composable này
-            val viewModel= MainViewModel()
 
             ItemsListScreen(
                 title = title,
                 navController = navController,
-                viewModel = viewModel,
+                viewModel = mainViewModel,
                 id = id,
                 onBackClick = { navController.popBackStack() }
             )
@@ -57,16 +57,13 @@ fun AppNavigation(viewModel: AuthViewModel?) {
         }
         composable("detail/{foodId}") { backStackEntry ->
             val foodId = backStackEntry.arguments?.getString("foodId") ?: ""
-            val viewModel = MainViewModel()
+            val food by mainViewModel.loadFoodDetail(foodId).observeAsState()
 
-            val foodList by viewModel.loadFiltered(foodId).observeAsState()
-
-            if (foodList != null && foodList!!.isNotEmpty()) {
-                val foodItem = foodList!!.first() // Assuming foodId gives one item
+            if (food != null) {
                 DetailFoodScreen(
-                    item = foodItem,
+                    item = food!!,
                     onBackClick = { navController.popBackStack() },
-                    onAddToCartClick = { /* Optional: show toast or navigate */ }
+                    onAddToCartClick = { /* Optional */ }
                 )
             } else {
                 Text("Loading...")

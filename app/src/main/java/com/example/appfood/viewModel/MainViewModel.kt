@@ -1,6 +1,7 @@
 package com.example.appfood.viewModel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.appfood.model.data.repository.MainRepository
 import com.example.appfood.model.domain.BannerModel
@@ -20,6 +21,10 @@ class MainViewModel :ViewModel(){
     fun loadFiltered(id: String): LiveData<MutableList<FoodModel>> {
         return repository.loadFiltered(id)
     }
+    fun loadFoodDetail(foodId: String): MutableLiveData<FoodModel?> {
+        return repository.loadFoodDetail(foodId)
+    }
+
 
 
 }
