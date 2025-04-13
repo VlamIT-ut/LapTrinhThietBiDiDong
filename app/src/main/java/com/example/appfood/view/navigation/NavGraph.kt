@@ -16,6 +16,7 @@ import com.example.appfood.view.ui.screens.main.ProfileScreen
 import com.example.appfood.view.ui.screens.login_signup.SignUpScreen
 import com.example.appfood.view.ui.screens.main.CartScreen
 import com.example.appfood.view.ui.screens.main.DetailFoodScreen
+import com.example.appfood.view.ui.screens.main.PaymentScreen
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen1
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen2
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen3
@@ -71,6 +72,6 @@ fun AppNavigation(viewModel: AuthViewModel?) {
         }
 
         composable("profile") { ProfileScreen(navController, viewModel ?: return@composable) }
-
+        composable("payment") { PaymentScreen(navController) }
     }
 }
