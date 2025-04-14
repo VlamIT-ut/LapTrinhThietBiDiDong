@@ -56,7 +56,7 @@ fun DeliveryInfoBox(navController: NavController){
         InfoItem(
             title = "Payment Method",
             content = "Momo",
-            icon = painterResource(id = R.drawable.momo),
+            icon = painterResource(id = R.drawable.ic_momo),
             navController = navController
 
         )
