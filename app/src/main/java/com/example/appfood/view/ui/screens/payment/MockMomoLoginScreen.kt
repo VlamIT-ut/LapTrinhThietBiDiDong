@@ -1,4 +1,4 @@
-package com.example.appfood.view.ui.screens.mock
+package com.example.appfood.view.ui.screens.payment
 
 import android.widget.Toast
 import androidx.compose.animation.core.tween
@@ -70,6 +70,7 @@ fun MockMomoLoginScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .statusBarsPadding()
     ) {
         // Banner slider
         HorizontalPager(

@@ -18,8 +18,8 @@ import com.example.appfood.view.ui.screens.main.ProfileScreen
 import com.example.appfood.view.ui.screens.login_signup.SignUpScreen
 import com.example.appfood.view.ui.screens.main.CartScreen
 import com.example.appfood.view.ui.screens.main.DetailFoodScreen
-import com.example.appfood.view.ui.screens.main.PaymentScreen
-import com.example.appfood.view.ui.screens.mock.MockMomoLoginScreen
+import com.example.appfood.view.ui.screens.main.FavoriteScreen
+import com.example.appfood.view.ui.screens.payment.MockMomoLoginScreen
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen1
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen2
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen3
@@ -33,11 +33,7 @@ fun AppNavigation(viewModel: AuthViewModel?) {
     val mainViewModel = MainViewModel()
     val isLoggedIn = viewModel?.isLoggedIn?.collectAsState(initial = false)?.value ?: false
     val isFirstLaunch = viewModel?.isFirstLaunch?.collectAsState(initial = true)?.value ?: true
-    val startDestination = when {
-        isFirstLaunch -> "welcome"
-        isLoggedIn -> "home"
-        else -> "login"
-    }
+    val startDestination = if (isFirstLaunch) "welcome" else if (isLoggedIn) "home" else "login"
 
     NavHost(navController = navController,startDestination = startDestination ) {
         composable("welcome") {
@@ -89,9 +85,9 @@ fun AppNavigation(viewModel: AuthViewModel?) {
         }
 
         composable("profile") { ProfileScreen(navController, viewModel ?: return@composable) }
-        composable("payment") { PaymentScreen(navController) }
         composable("mock_momo_login") {
             MockMomoLoginScreen(navController)
         }
+        composable("favorite") {FavoriteScreen(navController)}
     }
 }

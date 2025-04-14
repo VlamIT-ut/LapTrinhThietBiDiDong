@@ -126,5 +126,6 @@ private fun FavoriteButton(modifier: Modifier = Modifier) {
         contentDescription = null,
         modifier = modifier
             .padding(end = 16.dp, top = 48.dp)
+            .clickable { }
     )
 }

@@ -84,7 +84,7 @@ fun MyBottomBar(navController: NavController) {
                     modifier = Modifier.size(32.dp)
                 )
             }
-            Button(onClick = {},
+            Button(onClick = {navController.navigate("favorite")},
                 modifier = Modifier.align(Alignment.CenterVertically),
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.grey),contentColor = Color.Black)) {
