@@ -20,6 +20,7 @@ import com.example.appfood.view.ui.screens.main.CartScreen
 import com.example.appfood.view.ui.screens.main.DetailFoodScreen
 import com.example.appfood.view.ui.screens.main.FavoriteScreen
 import com.example.appfood.view.ui.screens.payment.MockMomoLoginScreen
+import com.example.appfood.view.ui.screens.payment.MockVnpayPayment
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen1
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen2
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen3
@@ -87,6 +88,9 @@ fun AppNavigation(viewModel: AuthViewModel?) {
         composable("profile") { ProfileScreen(navController, viewModel ?: return@composable) }
         composable("mock_momo_login") {
             MockMomoLoginScreen(navController)
+        }
+        composable("mock_vnpay_payment"){
+            MockVnpayPayment(navController)
         }
         composable("favorite") {FavoriteScreen(navController)}
     }
