@@ -84,5 +84,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth-ktx")
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
-
+    implementation("androidx.compose.foundation:foundation:1.5.0")
+    implementation ("com.google.accompanist:accompanist-pager:0.28.0")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.28.0")
 }

@@ -61,8 +61,7 @@ fun PaymentScreen(navController: NavController) {
             logoRes = R.drawable.ic_momo,
             name = "Momo",
             onClick = {
-                Toast.makeText(context, "Momo clicked", Toast.LENGTH_SHORT).show()
-                // TODO: Thêm tích hợp Momo tại đây
+                navController.navigate("mock_momo_login")
             }
         )
         Spacer(modifier = Modifier.height(12.dp))
