@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +24,7 @@ import com.example.appfood.R
 
 @Composable
 fun DeliveryInfoBox(navController: NavController) {
-    var selectedMethod by remember { mutableStateOf("Momo") }
+    var selectedMethod by rememberSaveable { mutableStateOf("Momo") }
 
     Column(
         modifier = Modifier
@@ -138,10 +139,9 @@ fun PaymentOptionRow(
             .fillMaxWidth()
             .clickable {
                 onSelected()
-                if (method == "VNPay") {
-                    navController.navigate("mock_vnpay_payment")
-                } else if (method == "Momo") {
-                    navController.navigate("mock_momo_login")
+                when (method) {
+                    "VNPay" -> navController.navigate("mock_vnpay_payment")
+                    "Momo" -> navController.navigate("mock_momo_login")
                 }
             }
             .padding(vertical = 4.dp)
@@ -160,14 +160,7 @@ fun PaymentOptionRow(
         )
         RadioButton(
             selected = selectedMethod == method,
-            onClick = {
-                onSelected()
-                if (method == "VNPay") {
-                    navController.navigate("mock_vnpay_payment")
-                } else if (method == "Momo") {
-                    navController.navigate("mock_momo_login")
-                }
-            },
+            onClick = null,
             colors = RadioButtonDefaults.colors(
                 selectedColor = Color.Green,
                 unselectedColor = Color.Gray

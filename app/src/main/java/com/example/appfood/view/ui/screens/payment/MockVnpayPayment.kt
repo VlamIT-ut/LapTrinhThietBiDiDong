@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MockVnpayPayment(navController: NavController) {
     var phoneNumber by remember { mutableStateOf("") }
@@ -31,6 +32,28 @@ fun MockVnpayPayment(navController: NavController) {
     val context = LocalContext.current
 
     Scaffold(
+        topBar = {TopAppBar(title = {
+            Row(){
+                IconButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                ) {
+                    Icon(
+                        painterResource(R.drawable.back),
+                        contentDescription = "Back",
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+                Text(
+                    text = "VNPay",
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(modifier = Modifier.width(48.dp))
+            }
+        },)},
         snackbarHost = {
             SnackbarHost(snackbarHostState) { data ->
                 Snackbar(
@@ -51,21 +74,6 @@ fun MockVnpayPayment(navController: NavController) {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // 🔙 Nút back ở góc trên bên trái
-            IconButton(
-                onClick = { navController.popBackStack() },
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color(0xFF2979FF), // Màu xanh nổi bật
-                    modifier = Modifier.size(28.dp)
-                )
-            }
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -73,7 +81,6 @@ fun MockVnpayPayment(navController: NavController) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(48.dp)) // Dưới nút back
 
                 // Banner
                 Image(
