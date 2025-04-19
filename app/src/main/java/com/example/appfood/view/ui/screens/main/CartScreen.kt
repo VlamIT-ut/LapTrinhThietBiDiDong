@@ -143,7 +143,9 @@ fun CartScreen(navController: NavController, managementCart: ManagmentCart) {
                         )
                     }
                     item {
-                        DeliveryInfoBox(navController)
+                        DeliveryInfoBox(navController = navController,
+                            managementCart = managementCart,
+                            tax = tax.doubleValue)
                     }
                 }
             }

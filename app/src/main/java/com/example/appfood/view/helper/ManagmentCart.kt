@@ -53,4 +53,13 @@ class ManagmentCart(private val context: Context) {
         }
         return fee
     }
+
+    // ✅ HÀM ĐÃ THÊM: Xoá món khỏi giỏ hàng
+    fun removeItem(listFood: ArrayList<FoodModel>, position: Int, listener: ChangeNumberItemsListener) {
+        if (position < 0 || position >= listFood.size) return
+        listFood.removeAt(position)
+        tinyDB.putListObject("CartList", listFood)
+        listener.onChanged()
+        Toast.makeText(context, "Item removed from cart", Toast.LENGTH_SHORT).show()
+    }
 }
