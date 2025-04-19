@@ -37,6 +37,7 @@ import com.example.appfood.view.cart.CartSummary
 import com.example.appfood.view.cart.DeliveryInfoBox
 import com.example.appfood.view.helper.ManagmentCart
 import com.example.appfood.view.navigation.MyBottomBar
+import com.example.appfood.viewModel.LocationViewModel
 import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.insets.ui.TopAppBar
 import java.util.ArrayList
@@ -59,7 +60,7 @@ import java.util.ArrayList
  */
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-fun CartScreen(navController: NavController, managementCart: ManagmentCart) {
+fun CartScreen(navController: NavController, managementCart: ManagmentCart,locationViewModel: LocationViewModel) {
     val cartItems = remember { mutableStateOf(managementCart.getListCart()) }
     val tax = remember { mutableDoubleStateOf(value = 0.0) }
     calculatorCart(managementCart, tax)
@@ -145,7 +146,8 @@ fun CartScreen(navController: NavController, managementCart: ManagmentCart) {
                     item {
                         DeliveryInfoBox(navController = navController,
                             managementCart = managementCart,
-                            tax = tax.doubleValue)
+                            tax = tax.doubleValue,
+                            locationViewModel = locationViewModel)
                     }
                 }
             }

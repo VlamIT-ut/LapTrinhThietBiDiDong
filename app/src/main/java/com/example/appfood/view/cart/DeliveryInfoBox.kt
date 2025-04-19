@@ -1,5 +1,6 @@
 package com.example.appfood.view.cart
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,16 +15,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.appfood.R
+import com.example.appfood.model.data.repository.OrderRepository
+import com.example.appfood.model.domain.OrderModel
+import com.example.appfood.view.helper.ManagmentCart
+import com.example.appfood.viewModel.LocationViewModel
 
 @Composable
-fun DeliveryInfoBox(navController: NavController) {
+fun DeliveryInfoBox(navController: NavController,
+                    managementCart: ManagmentCart,
+                    tax: Double,
+                    locationViewModel: LocationViewModel = viewModel()
+                    ) {
     var selectedMethod by rememberSaveable { mutableStateOf("Momo") }
 
     Column(
@@ -35,10 +46,34 @@ fun DeliveryInfoBox(navController: NavController) {
     ) {
         InfoItem(
             title = "Your Delivery Address",
-            content = "NY-downtown-no97",
+            content = "Geocoder",
             icon = painterResource(id = R.drawable.location),
             navController = navController
         )
+        // ✅ Hiển thị vị trí người dùng đã chọn (nếu có)
+        locationViewModel.selectedPoint?.let { point ->
+            Column(modifier = Modifier.padding(top = 4.dp, start = 40.dp)) {
+                Text(
+                    text = "Latitude: ${point.latitude}, Longitude: ${point.longitude}",
+                    fontSize = 14.sp,
+                    color = Color.DarkGray
+                )
+                locationViewModel.selectedAddress?.let { address ->
+                    Text(
+                        text = address,
+                        fontSize = 14.sp,
+                        color = Color.DarkGray
+                    )
+                }
+            }
+        } ?: Text(
+            text = "Location not saved on map",
+            fontSize = 14.sp,
+            color = Color.Gray,
+            modifier = Modifier.padding(top = 4.dp, start = 40.dp)
+        )
+
+
         Divider(modifier = Modifier.padding(vertical = 8.dp))
         PaymentSection(
             selectedMethod = selectedMethod,
@@ -47,8 +82,33 @@ fun DeliveryInfoBox(navController: NavController) {
         )
     }
 
+    val context = LocalContext.current
+    val orderRepo = remember { OrderRepository() }
+
     Button(
-        onClick = { navController.navigate("success") },
+        onClick = {
+            val order = OrderModel(
+                userId = "demo_user", // Cập nhật từ người dùng thật nếu có auth
+                items = managementCart.getListCart(),
+                total = managementCart.getTotalFee(),
+                tax = tax,
+                deliveryFee = 10.0,
+                paymentMethod = selectedMethod,
+                address = "Your address here",
+                latitude = locationViewModel.selectedPoint?.latitude ?: 0.0,
+                longitude = locationViewModel.selectedPoint?.longitude ?: 0.0,
+
+            )
+
+            orderRepo.saveOrder(order) { success ->
+                if (success) {
+                    Toast.makeText(context, "Order placed successfully!", Toast.LENGTH_SHORT).show()
+                    navController.navigate("success")
+                } else {
+                    Toast.makeText(context, "Failed to place order.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        },
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.orange)),
         modifier = Modifier
@@ -58,6 +118,7 @@ fun DeliveryInfoBox(navController: NavController) {
     ) {
         Text("Place Order", fontSize = 18.sp, color = Color.White)
     }
+
 }
 
 @Composable
@@ -72,7 +133,7 @@ fun InfoItem(title: String, content: String, icon: Painter, navController: NavCo
                 .fillMaxWidth()
                 .clickable {
                     if (title != "Payment Method") {
-                        navController.navigate("address")
+                        navController.navigate("choose_location")
                     }
                 }
         ) {
