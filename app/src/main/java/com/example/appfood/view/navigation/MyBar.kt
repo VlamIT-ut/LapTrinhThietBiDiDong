@@ -94,14 +94,14 @@ fun MyBottomBar(navController: NavController) {
                     modifier = Modifier.size(32.dp)
                 )
             }
-            Button(onClick = {},
+            Button(onClick = {navController.navigate("my_orders")},
                 modifier = Modifier.align(Alignment.CenterVertically),
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.grey),contentColor = Color.Black)
                 ) {
                 Icon(
                     painter = painterResource(id = R.drawable.btn_4),
-                    contentDescription = "Order",
+                    contentDescription = "My Orders",
                     modifier = Modifier.size(32.dp)
                 )
             }

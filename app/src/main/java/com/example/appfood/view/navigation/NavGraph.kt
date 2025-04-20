@@ -20,6 +20,7 @@ import com.example.appfood.view.ui.screens.login_signup.SignUpScreen
 import com.example.appfood.view.ui.screens.main.CartScreen
 import com.example.appfood.view.ui.screens.main.DetailFoodScreen
 import com.example.appfood.view.ui.screens.main.FavoriteScreen
+import com.example.appfood.view.ui.screens.main.MyOrderScreen
 import com.example.appfood.view.ui.screens.main.SuccessScreen
 import com.example.appfood.view.ui.screens.payment.MockMomoLoginScreen
 import com.example.appfood.view.ui.screens.payment.MockVnpayPayment
@@ -30,12 +31,14 @@ import com.example.appfood.view.ui.screens.splash.SplashScreen
 import com.example.appfood.viewModel.AuthViewModel
 import com.example.appfood.viewModel.LocationViewModel
 import com.example.appfood.viewModel.MainViewModel
+import com.example.appfood.viewModel.OrderViewModel
 
 @Composable
 fun AppNavigation(viewModel: AuthViewModel?) {
     val navController = rememberNavController()
     val mainViewModel = MainViewModel()
     val locationViewModel = LocationViewModel()
+    val orderViewModel = OrderViewModel()
     val isLoggedIn = viewModel?.isLoggedIn?.collectAsState(initial = false)?.value ?: false
     val isFirstLaunch = viewModel?.isFirstLaunch?.collectAsState(initial = true)?.value ?: true
     val startDestination = if (isFirstLaunch) "welcome" else if (isLoggedIn) "home" else "login"
@@ -104,5 +107,9 @@ fun AppNavigation(viewModel: AuthViewModel?) {
             DeliveryLocationScreen(navController, locationViewModel)
         }
         composable("success"){ SuccessScreen(navController) }
+        composable("my_orders") {
+            MyOrderScreen(orderViewModel,navController)
+        }
+
     }
 }
