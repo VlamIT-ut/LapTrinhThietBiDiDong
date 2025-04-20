@@ -1,5 +1,6 @@
 package com.example.appfood.view.navigation
 
+import com.example.appfood.view.ui.screens.map.DeliveryLocationScreen
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.appfood.view.helper.ManagmentCart
+import com.example.appfood.view.helper.ManagementCart
 import com.example.appfood.view.ui.screens.main.ItemsListScreen
 import com.example.appfood.view.ui.screens.main.HomeScreen
 import com.example.appfood.view.ui.screens.login_signup.LoginScreen
@@ -19,18 +20,22 @@ import com.example.appfood.view.ui.screens.login_signup.SignUpScreen
 import com.example.appfood.view.ui.screens.main.CartScreen
 import com.example.appfood.view.ui.screens.main.DetailFoodScreen
 import com.example.appfood.view.ui.screens.main.FavoriteScreen
+import com.example.appfood.view.ui.screens.main.SuccessScreen
 import com.example.appfood.view.ui.screens.payment.MockMomoLoginScreen
+import com.example.appfood.view.ui.screens.payment.MockVnpayPayment
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen1
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen2
 import com.example.appfood.view.ui.screens.splash.GetStartedScreen3
 import com.example.appfood.view.ui.screens.splash.SplashScreen
 import com.example.appfood.viewModel.AuthViewModel
+import com.example.appfood.viewModel.LocationViewModel
 import com.example.appfood.viewModel.MainViewModel
 
 @Composable
 fun AppNavigation(viewModel: AuthViewModel?) {
     val navController = rememberNavController()
     val mainViewModel = MainViewModel()
+    val locationViewModel = LocationViewModel()
     val isLoggedIn = viewModel?.isLoggedIn?.collectAsState(initial = false)?.value ?: false
     val isFirstLaunch = viewModel?.isFirstLaunch?.collectAsState(initial = true)?.value ?: true
     val startDestination = if (isFirstLaunch) "welcome" else if (isLoggedIn) "home" else "login"
@@ -66,7 +71,7 @@ fun AppNavigation(viewModel: AuthViewModel?) {
 
         composable("cart_screen") {
             CartScreen(
-                navController = navController, managementCart = ManagmentCart(context = LocalContext.current)
+                navController = navController, managementCart = ManagementCart(context = LocalContext.current), locationViewModel
             )
         }
         composable("detail/{foodId}") { backStackEntry ->
@@ -77,7 +82,8 @@ fun AppNavigation(viewModel: AuthViewModel?) {
                 DetailFoodScreen(
                     item = food!!,
                     onBackClick = { navController.popBackStack() },
-                    onAddToCartClick = { /* Optional */ }
+                    onAddToCartClick = { /* Optional */ },
+                    viewModel = mainViewModel
                 )
             } else {
                 Text("Loading...")
@@ -88,6 +94,15 @@ fun AppNavigation(viewModel: AuthViewModel?) {
         composable("mock_momo_login") {
             MockMomoLoginScreen(navController)
         }
-        composable("favorite") {FavoriteScreen(navController)}
+        composable("mock_vnpay_payment"){
+            MockVnpayPayment(navController)
+        }
+        composable("favorite") {
+            FavoriteScreen(navController = navController, viewModel = mainViewModel)
+        }
+        composable("choose_location") {
+            DeliveryLocationScreen(navController, locationViewModel)
+        }
+        composable("success"){ SuccessScreen(navController) }
     }
 }

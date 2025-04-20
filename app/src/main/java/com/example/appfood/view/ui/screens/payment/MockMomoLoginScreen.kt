@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -24,7 +25,7 @@ import com.google.accompanist.pager.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MockMomoLoginScreen(navController: NavController) {
     val context = LocalContext.current
@@ -58,6 +59,7 @@ fun MockMomoLoginScreen(navController: NavController) {
             "continue" to "Tiếp tục",
             "success" to "Thanh toán thành công!"
         )
+
         else -> mapOf(
             "hint" to "Your information is absolutely secure",
             "placeholder" to "Phone number",
@@ -66,102 +68,130 @@ fun MockMomoLoginScreen(navController: NavController) {
         )
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .statusBarsPadding()
-    ) {
-        // Banner slider
-        HorizontalPager(
-            count = bannerImages.size,
-            state = pagerState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp)
-        ) { page ->
-            Image(
-                painter = painterResource(id = bannerImages[page]),
-                contentDescription = "Banner",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = texts["hint"] ?: "",
-            fontSize = 14.sp,
-            color = Color.Gray
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Phone input
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .border(1.dp, Color(0xFFDD1582), RoundedCornerShape(8.dp))
-                .padding(horizontal = 12.dp)
-        ) {
-            Text(text = "🇻🇳", fontSize = 20.sp)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "+84", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.width(8.dp))
-            Divider(
+    Scaffold(
+        topBar = {
+            TopAppBar(
+            title = {
+                Row(){
+                    IconButton(
+                        onClick = { navController.popBackStack() },
+                        modifier = Modifier
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.back),
+                            contentDescription = "Back",
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                    Text(
+                        text = "MoMo",
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Spacer(modifier = Modifier.width(48.dp))
+                }
+            }
+        )},
+        content = { innerPadding ->
+            Column(
                 modifier = Modifier
-                    .width(1.dp)
-                    .height(24.dp)
-                    .background(Color.Gray)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            OutlinedTextField(
-                value = phoneNumber,
-                onValueChange = { phoneNumber = it },
-                placeholder = { Text(texts["placeholder"] ?: "") },
-                singleLine = true,
-                modifier = Modifier.weight(1f),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .statusBarsPadding()
+            ) {
+                // Banner slider
+                HorizontalPager(
+                    count = bannerImages.size,
+                    state = pagerState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                ) { page ->
+                    Image(
+                        painter = painterResource(id = bannerImages[page]),
+                        contentDescription = "Banner",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = texts["hint"] ?: "",
+                    fontSize = 14.sp,
+                    color = Color.Gray
                 )
-            )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Phone input
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                        .border(1.dp, Color(0xFFDD1582), RoundedCornerShape(8.dp))
+                        .padding(horizontal = 12.dp)
+                ) {
+                    Text(text = "🇻🇳", fontSize = 20.sp)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "+84", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Divider(
+                        modifier = Modifier
+                            .width(1.dp)
+                            .height(24.dp)
+                            .background(Color.Gray)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    OutlinedTextField(
+                        value = phoneNumber,
+                        onValueChange = { phoneNumber = it },
+                        placeholder = { Text(texts["placeholder"] ?: "") },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent
+                        )
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Language switch
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    LanguageButton("Việt", selectedLang == "Việt") { selectedLang = "Việt" }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    LanguageButton("Eng", selectedLang == "Eng") { selectedLang = "Eng" }
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Continue button
+                Button(
+                    onClick = {
+                        Toast.makeText(context, texts["success"] ?: "", Toast.LENGTH_SHORT).show()
+                        navController.popBackStack()
+                    },
+                    enabled = isPhoneValid,
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                ) {
+                    Text(text = texts["continue"] ?: "")
+                }
+            }
         }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        // Language switch
-        Row(
-            horizontalArrangement = Arrangement.End,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            LanguageButton("Việt", selectedLang == "Việt") { selectedLang = "Việt" }
-            Spacer(modifier = Modifier.width(8.dp))
-            LanguageButton("Eng", selectedLang == "Eng") { selectedLang = "Eng" }
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        // Continue button
-        Button(
-            onClick = {
-                Toast.makeText(context, texts["success"] ?: "", Toast.LENGTH_SHORT).show()
-                navController.popBackStack()
-            },
-            enabled = isPhoneValid,
-            shape = RoundedCornerShape(10.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-        ) {
-            Text(text = texts["continue"] ?: "")
-        }
-    }
+    )
 }
-
 @Composable
 fun LanguageButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
     TextButton(
