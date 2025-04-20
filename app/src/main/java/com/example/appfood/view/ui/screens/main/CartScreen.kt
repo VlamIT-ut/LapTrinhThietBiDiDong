@@ -35,7 +35,7 @@ import com.example.appfood.R
 import com.example.appfood.view.cart.CartItem
 import com.example.appfood.view.cart.CartSummary
 import com.example.appfood.view.cart.DeliveryInfoBox
-import com.example.appfood.view.helper.ManagmentCart
+import com.example.appfood.view.helper.ManagementCart
 import com.example.appfood.view.navigation.MyBottomBar
 import com.example.appfood.viewModel.LocationViewModel
 import com.google.accompanist.insets.ui.Scaffold
@@ -51,7 +51,7 @@ import java.util.ArrayList
  * @param managementCart The cart management object responsible for handling cart operations.
  *                       Defaults to a new `ManagmentCart` instance.
  *
- * @see ManagmentCart
+ * @see ManagementCart
  * @see CartItem
  * @see CartSummary
  * @see DeliveryInfoBox
@@ -60,7 +60,7 @@ import java.util.ArrayList
  */
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-fun CartScreen(navController: NavController, managementCart: ManagmentCart,locationViewModel: LocationViewModel) {
+fun CartScreen(navController: NavController, managementCart: ManagementCart, locationViewModel: LocationViewModel) {
     val cartItems = remember { mutableStateOf(managementCart.getListCart()) }
     val tax = remember { mutableDoubleStateOf(value = 0.0) }
     calculatorCart(managementCart, tax)
@@ -98,13 +98,14 @@ fun CartScreen(navController: NavController, managementCart: ManagmentCart,locat
             ) {
                 if (cartItems.value.isEmpty()) {
                     item {
-                        Text(
-                            text = "Cart Is Empty",
+                        Box(
                             modifier = Modifier
-                                .padding(top = 16.dp)
-                                .fillMaxWidth(),
-                            textAlign = TextAlign.Center
-                        )
+                                .fillMaxSize()
+                                .padding(innerPadding),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("No cart items yet!")
+                        }
                     }
                 } else {
                     items(cartItems.value) { item ->
@@ -154,7 +155,7 @@ fun CartScreen(navController: NavController, managementCart: ManagmentCart,locat
         }
     )
 }
-fun calculatorCart(managementCart: ManagmentCart,tax:MutableState<Double>){
+fun calculatorCart(managementCart: ManagementCart,tax:MutableState<Double>){
     val percentTax = 0.02
     tax.value = Math.round((managementCart.getTotalFee()*percentTax)*100)/100.0
 }

@@ -23,14 +23,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
 import com.example.appfood.R
 import com.example.appfood.model.domain.FoodModel
-import com.example.appfood.view.helper.ManagmentCart
+import com.example.appfood.view.helper.ManagementCart
 import java.util.ArrayList
 
 @Composable
 fun CartItem(
     cartItems: ArrayList<FoodModel>,
     item: FoodModel,
-    managmentCart: ManagmentCart,
+    managmentCart: ManagementCart,
     onItemChange: () -> Unit
 ) {
     ConstraintLayout(
@@ -39,7 +39,6 @@ fun CartItem(
             .fillMaxWidth()
             .border(1.dp, colorResource(R.color.grey), shape = RoundedCornerShape(10.dp))
     ) {
-        // ⬇️ Thêm tham chiếu deleteBtn
         val (pic, titleTxt, feeEachTime, totalEachItem, quantity, deleteBtn) = createRefs()
 
         var numberInCart by remember { mutableIntStateOf(item.numberInCart) }
@@ -176,7 +175,6 @@ fun CartItem(
             }
         }
 
-        // ⬇️ Nút xoá món - ĐÃ THÊM
         Box(
             modifier = Modifier
                 .padding(8.dp)
@@ -186,7 +184,7 @@ fun CartItem(
                     end.linkTo(parent.end)
                 }
                 .clickable {
-                    managmentCart.removeItem(cartItems, cartItems.indexOf(item)) {
+                    managmentCart.removeItem(cartItems.indexOf(item)) {
                         onItemChange()
                     }
                 }

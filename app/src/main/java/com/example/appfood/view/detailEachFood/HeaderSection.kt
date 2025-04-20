@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -21,14 +23,16 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.appfood.R
 import com.example.appfood.model.domain.FoodModel
 
-
 @Composable
-fun HeaderSection(item: FoodModel,
-                  numberInCart: Int,
-                  onBackClick:()->Unit,
-                  onIncrement: () -> Unit,
-                  onDecrement: () -> Unit)
-{
+fun HeaderSection(
+    item: FoodModel,
+    numberInCart: Int,
+    onBackClick: () -> Unit,
+    onIncrement: () -> Unit,
+    onDecrement: () -> Unit,
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
@@ -50,12 +54,13 @@ fun HeaderSection(item: FoodModel,
                         bottomEnd = 30.dp
                     )
                 )
-                .constrainAs(mainImage){
+                .constrainAs(mainImage) {
                     top.linkTo(parent.top)
                     end.linkTo(parent.end)
                     start.linkTo(parent.start)
                 }
         )
+
         Image(
             painter = painterResource(R.drawable.arc_bg),
             contentDescription = null,
@@ -67,14 +72,21 @@ fun HeaderSection(item: FoodModel,
                     start.linkTo(parent.start)
                 }
         )
-        BackButton(onBackClick, Modifier.constrainAs(back) {
+
+        BackButton(onClick = onBackClick, modifier = Modifier.constrainAs(back) {
             top.linkTo(parent.top)
             start.linkTo(parent.start)
         })
-        FavoriteButton(Modifier.constrainAs(fav) {
-            top.linkTo(parent.top)
-            end.linkTo(parent.end)
-        })
+
+        FavoriteButton(
+            isFavorite = isFavorite,
+            onClick = onFavoriteClick,
+            modifier = Modifier.constrainAs(fav) {
+                top.linkTo(parent.top)
+                end.linkTo(parent.end)
+            }
+        )
+
         Text(
             text = item.Title,
             fontSize = 24.sp,
@@ -88,17 +100,22 @@ fun HeaderSection(item: FoodModel,
                     start.linkTo(parent.start)
                 }
         )
-        RowDetail(item,Modifier.constrainAs(detailRow) {
-            top.linkTo(title.bottom)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        })
+
+        RowDetail(
+            item = item,
+            modifier = Modifier.constrainAs(detailRow) {
+                top.linkTo(title.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
+        )
+
         NumberRow(
-            item=item,
-            numberInCart=numberInCart,
-            onIncrement=onIncrement,
-            onDecrement=onDecrement,
-            Modifier.constrainAs(numberRow) {
+            item = item,
+            numberInCart = numberInCart,
+            onIncrement = onIncrement,
+            onDecrement = onDecrement,
+            modifier = Modifier.constrainAs(numberRow) {
                 top.linkTo(detailRow.bottom)
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
@@ -120,12 +137,19 @@ private fun BackButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun FavoriteButton(modifier: Modifier = Modifier) {
+private fun FavoriteButton(
+    isFavorite: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val tintColor = if (isFavorite) Color.Red else colorResource(id = R.color.grey)
+
     Image(
         painter = painterResource(R.drawable.fav_icon),
         contentDescription = null,
+        colorFilter = ColorFilter.tint(tintColor),
         modifier = modifier
             .padding(end = 16.dp, top = 48.dp)
-            .clickable { }
+            .clickable { onClick() }
     )
 }

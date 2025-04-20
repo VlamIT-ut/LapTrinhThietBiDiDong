@@ -26,12 +26,12 @@ import androidx.navigation.NavController
 import com.example.appfood.R
 import com.example.appfood.model.data.repository.OrderRepository
 import com.example.appfood.model.domain.OrderModel
-import com.example.appfood.view.helper.ManagmentCart
+import com.example.appfood.view.helper.ManagementCart
 import com.example.appfood.viewModel.LocationViewModel
 
 @Composable
 fun DeliveryInfoBox(navController: NavController,
-                    managementCart: ManagmentCart,
+                    managementCart: ManagementCart,
                     tax: Double,
                     locationViewModel: LocationViewModel = viewModel()
                     ) {
