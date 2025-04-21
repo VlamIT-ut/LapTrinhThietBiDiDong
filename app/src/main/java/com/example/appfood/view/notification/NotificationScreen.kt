@@ -1,10 +1,9 @@
-package com.example.appfood.view.ui.screens.main
+package com.example.appfood.view.notification
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,33 +11,38 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Divider
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appfood.R
+import com.example.appfood.viewModel.NotificationViewModel
 import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.insets.ui.TopAppBar
-
 @Composable
-fun SettingsScreen(
-    navController: NavController,
-    currentLang: String,
-    onLanguageToggle: () -> Unit,
-    onAccountDeleteClick: () -> Unit
-)
- {
+fun NotificationScreen(navController: NavController,notificationViewModel: NotificationViewModel) {
+    val notifications = notificationViewModel.notifications
+
+    // Đánh dấu tất cả là đã đọc khi mở màn hình
+    LaunchedEffect(Unit) {
+        notificationViewModel.markAllAsRead()
+    }
+
+
     Scaffold(
         modifier = Modifier.fillMaxSize().statusBarsPadding(),
         topBar = {TopAppBar(title = { Box(modifier = Modifier.fillMaxWidth(),
@@ -52,7 +56,7 @@ fun SettingsScreen(
                     modifier = Modifier.clickable { navController.popBackStack() }
                 )
                 Text(
-                    text = stringResource(R.string.settings),
+                    text = "Notifications",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.orange),
@@ -63,47 +67,30 @@ fun SettingsScreen(
 
         }
         },
-            backgroundColor = colorResource(R.color.grey)) },
+            backgroundColor = colorResource(R.color.white)
+        ) },
     ) { padding ->
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)) {
-
-            val langName = if (currentLang == "vi") {
-                stringResource(R.string.language_vietnamese)
-            } else {
-                stringResource(R.string.language_english)
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp)
+        ) {
+            items(notifications) { notif ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0)),
+                    elevation = CardDefaults.cardElevation(2.dp)
+                ) {
+                    Text(
+                        text = notif,
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
             }
-            SettingItem(
-                title = stringResource(R.string.change_language),
-                value = langName,
-                onClick = onLanguageToggle
-            )
-            Divider()
-            SettingItem(title = stringResource(R.string.help), enabled = false, onClick = {})
-            Divider()
-            SettingItem(title = stringResource(R.string.request_account_deletion), onClick = onAccountDeleteClick)
-        }
-    }
-}
-
-@Composable
-fun SettingItem(title: String, value: String? = null, enabled: Boolean = true, onClick: () -> Unit) {
-    val textColor = if (enabled) Color.Black else Color.Gray
-    val modifier = if (enabled) Modifier
-        .fillMaxWidth()
-        .clickable { onClick() }
-        .padding(16.dp) else Modifier
-        .fillMaxWidth()
-        .padding(16.dp)
-
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = title, color = textColor)
-        if (value != null) {
-            Text(text = value, color = textColor)
         }
     }
 }

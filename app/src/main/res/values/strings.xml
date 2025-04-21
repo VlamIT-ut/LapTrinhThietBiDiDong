@@ -1,5 +1,13 @@
 <resources>
-    <string name="app_name">AppFood</string>
-    <string name="splashSubtitle">Shared and delightful,for an easy and
+    <string name="app_name" translatable="false">AppFood</string>
+    <string name="splashSubtitle" translatable="false">Shared and delightful,for an easy and
     enjoyable food ordering experience</string>
+    <string name="settings">Settings</string>
+    <string name="change_language">Change Language</string>
+    <string name="language_english">English</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="help">Help</string>
+    <string name="request_account_deletion">Request Account Deletion</string>
+    <string name="delete_account">Delete Account</string>
 </resources>
+

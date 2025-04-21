@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appfood.view.helper.ManagementCart
+import com.example.appfood.view.notification.NotificationScreen
 import com.example.appfood.view.ui.screens.main.ItemsListScreen
 import com.example.appfood.view.ui.screens.main.HomeScreen
 import com.example.appfood.view.ui.screens.login_signup.LoginScreen
@@ -34,31 +35,34 @@ import com.example.appfood.view.ui.screens.splash.SplashScreen
 import com.example.appfood.viewModel.AuthViewModel
 import com.example.appfood.viewModel.LocationViewModel
 import com.example.appfood.viewModel.MainViewModel
+import com.example.appfood.viewModel.NotificationViewModel
 import com.example.appfood.viewModel.OrderViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun AppNavigation(viewModel: AuthViewModel?) {
+fun AppNavigation(authViewModel: AuthViewModel,mainViewModel: MainViewModel) {
     val navController = rememberNavController()
-    val mainViewModel = MainViewModel()
     val locationViewModel = LocationViewModel()
     val orderViewModel = OrderViewModel()
-    val isLoggedIn = viewModel?.isLoggedIn?.collectAsState(initial = false)?.value ?: false
-    val isFirstLaunch = viewModel?.isFirstLaunch?.collectAsState(initial = true)?.value ?: true
+    val isLoggedIn = authViewModel.isLoggedIn.collectAsState(initial = false).value
+    val isFirstLaunch = authViewModel.isFirstLaunch.collectAsState(initial = true).value
     val startDestination = if (isFirstLaunch) "welcome" else if (isLoggedIn) "home" else "login"
+    val notificationViewModel: NotificationViewModel = viewModel()
+
 
     NavHost(navController = navController,startDestination = startDestination ) {
         composable("welcome") {
             // Màn Splash chỉ hiển thị lần đầu
             SplashScreen(navController)
             LaunchedEffect(Unit) {
-                viewModel?.completeFirstLaunch()  // Cập nhật không còn là lần đầu
+                authViewModel.completeFirstLaunch()  // Cập nhật không còn là lần đầu
             }
         }
         composable("get_started_1") { GetStartedScreen1(navController) }
         composable("get_started_2") { GetStartedScreen2(navController) }
         composable("get_started_3") { GetStartedScreen3(navController) }
-        composable("login") { LoginScreen(navController, viewModel ?: return@composable) }
-        composable("sign_up") { SignUpScreen(navController, viewModel ?: return@composable) }
+        composable("login") { LoginScreen(navController, authViewModel) }
+        composable("sign_up") { SignUpScreen(navController, authViewModel) }
         composable("home") { HomeScreen(navController) }
         composable("items_list/{id}/{title}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id") ?: ""
@@ -77,8 +81,9 @@ fun AppNavigation(viewModel: AuthViewModel?) {
 
         composable("cart_screen") {
             CartScreen(
-                navController = navController, managementCart = ManagementCart(context = LocalContext.current), locationViewModel
-            )
+                navController = navController,
+                managementCart = ManagementCart(context = LocalContext.current),
+                locationViewModel,notificationViewModel)
         }
         composable("detail/{foodId}") { backStackEntry ->
             val foodId = backStackEntry.arguments?.getString("foodId") ?: ""
@@ -96,7 +101,7 @@ fun AppNavigation(viewModel: AuthViewModel?) {
             }
         }
 
-        composable("profile") { ProfileScreen(navController, viewModel ?: return@composable) }
+        composable("profile") { ProfileScreen(navController, authViewModel) }
         composable("mock_momo_login") {
             MockMomoLoginScreen(navController)
         }
@@ -113,12 +118,18 @@ fun AppNavigation(viewModel: AuthViewModel?) {
         composable("my_orders") {
             MyOrderScreen(orderViewModel,navController)
         }
+        composable("settings") {
+            SettingsScreen(
+                navController = navController,
+                currentLang = mainViewModel.appLanguage.collectAsState().value,
+                onLanguageToggle = { mainViewModel.toggleLanguage() },
+                onAccountDeleteClick = { /*...*/ }
+            )
+        }
 
-        composable("Settings"){ SettingsScreen(navController,
-            onLanguageClick = { /* Handle language click */ },
-            onAccountDeleteClick = { /* Handle account delete click */ }) }
         composable("about") { AboutScreen(navController) }
         composable("help"){ HelpAndFaqScreen(navController) }
+        composable("notification"){ NotificationScreen(navController,notificationViewModel) }
     }
 
 }

@@ -3,14 +3,30 @@ package com.example.appfood.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.appfood.model.data.local.UserPreferences
 import com.example.appfood.model.data.repository.MainRepository
 import com.example.appfood.model.domain.BannerModel
 import com.example.appfood.model.domain.CategoryModel
 import com.example.appfood.model.domain.FoodModel
 import com.example.appfood.view.helper.FavoriteManager
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val userPreferences: UserPreferences) : ViewModel() {
+    val appLanguage = userPreferences.appLanguage.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        "en"
+    )
 
+    fun toggleLanguage() {
+        viewModelScope.launch {
+            val newLang = if (appLanguage.value == "en") "vi" else "en"
+            userPreferences.setAppLanguage(newLang)
+        }
+    }
     private val repository = MainRepository()
     val favoriteManager = FavoriteManager() // <- public để sử dụng ngoài ViewModel
 

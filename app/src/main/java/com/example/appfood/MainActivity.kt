@@ -9,10 +9,15 @@ import androidx.credentials.CredentialManager
 import com.example.appfood.view.navigation.AppNavigation
 import com.example.appfood.viewModel.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.appfood.model.data.factory.AuthViewModelFactory
+import com.example.appfood.model.data.factory.MainViewModelFactory
 import com.example.appfood.model.data.local.UserPreferences
 import com.example.appfood.model.data.repository.LoginRepository
+import com.example.appfood.view.ui.language.AppLanguageProvider
+import com.example.appfood.viewModel.MainViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -28,6 +33,12 @@ class MainActivity : ComponentActivity() {
             ), userPreferences
         )
     }
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProvider(
+            this,
+            MainViewModelFactory(userPreferences)
+        )[MainViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +49,15 @@ class MainActivity : ComponentActivity() {
         // Enable edge-to-edge display
         enableEdgeToEdge()
 
-        // Set content with AppNavigation and ViewModel
-        setContent {
-            AppNavigation(authViewModel)
+        // Cần observe ngôn ngữ trước khi setContent
+        lifecycleScope.launch {
+            userPreferences.appLanguage.collect { lang ->
+                setContent {
+                    AppLanguageProvider(language = lang) {
+                        AppNavigation(authViewModel,mainViewModel)
+                    }
+                }
+            }
         }
     }
 
@@ -51,16 +68,5 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// ViewModelFactory to instantiate AuthViewModel
-class AuthViewModelFactory(
-    private val repository: LoginRepository,
-    private val userPreferences: UserPreferences
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return AuthViewModel(repository, userPreferences) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
+
+

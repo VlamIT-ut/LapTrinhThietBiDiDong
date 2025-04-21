@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Cài đặt</string>
+    <string name="change_language">Thay đổi ngôn ngữ</string>
+    <string name="language_english">English</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="help">Trợ giúp</string>
+    <string name="request_account_deletion">Yêu cầu xóa tài khoản</string>
+    <string name="delete_account">Xóa tài khoản</string>
+</resources>

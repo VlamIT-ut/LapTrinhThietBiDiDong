@@ -28,14 +28,17 @@ import com.example.appfood.model.data.repository.OrderRepository
 import com.example.appfood.model.domain.OrderModel
 import com.example.appfood.view.helper.ManagementCart
 import com.example.appfood.viewModel.LocationViewModel
+import com.example.appfood.viewModel.NotificationViewModel
 import com.google.firebase.auth.FirebaseAuth
-
+import java.text.SimpleDateFormat
+import java.util.*
 @Composable
 fun DeliveryInfoBox(
     navController: NavController,
     managementCart: ManagementCart,
     tax: Double,
-    locationViewModel: LocationViewModel = viewModel()
+    locationViewModel: LocationViewModel = viewModel(),
+    notificationViewModel: NotificationViewModel = viewModel()
 ) {
     var selectedMethod by rememberSaveable { mutableStateOf("Momo") }
 
@@ -105,14 +108,18 @@ fun DeliveryInfoBox(
 
                 orderRepo.saveOrder(order) { success ->
                     if (success) {
+                        val message = "🎉 Đơn hàng mới đã được đặt lúc ${System.currentTimeMillis().formatAsTimeString()}!"
+                        notificationViewModel.addNotification(message)
+
                         Toast.makeText(context, "Order placed successfully!", Toast.LENGTH_SHORT).show()
                         navController.navigate("success")
                     } else {
                         Toast.makeText(context, "Failed to place order.", Toast.LENGTH_SHORT).show()
                     }
                 }
+
             } else {
-                Toast.makeText(context, "Bạn chưa đăng nhập!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "You are not logged in!", Toast.LENGTH_SHORT).show()
             }
         },
         shape = RoundedCornerShape(10.dp),
@@ -233,4 +240,8 @@ fun PaymentOptionRow(
             )
         )
     }
+}
+fun Long.formatAsTimeString(): String {
+    val sdf = SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.getDefault())
+    return sdf.format(Date(this))
 }

@@ -99,4 +99,14 @@ class LoginRepository(
     companion object {
         private const val TAG = "LoginRepository"
     }
+    suspend fun deleteAccount(): Boolean {
+        return try {
+            auth.currentUser?.delete()?.await()
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Account deletion failed: ${e.message}")
+            false
+        }
+    }
+
 }

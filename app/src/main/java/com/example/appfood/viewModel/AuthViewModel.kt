@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val repository: LoginRepository,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
 ) : ViewModel() {
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
@@ -97,6 +97,17 @@ class AuthViewModel(
             userPreferences.setFirstLaunchCompleted()
         }
     }
+    fun deleteAccount(onComplete: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val result = repository.deleteAccount()
+            if (result) {
+                setLoginState(false)
+                _authState.value = AuthState.Idle
+            }
+            onComplete(result)
+        }
+    }
+
 }
 
 // Sealed class for authentication state
