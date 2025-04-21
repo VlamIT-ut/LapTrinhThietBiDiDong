@@ -17,10 +17,13 @@ import com.example.appfood.view.ui.screens.main.HomeScreen
 import com.example.appfood.view.ui.screens.login_signup.LoginScreen
 import com.example.appfood.view.ui.screens.main.ProfileScreen
 import com.example.appfood.view.ui.screens.login_signup.SignUpScreen
+import com.example.appfood.view.ui.screens.main.AboutScreen
 import com.example.appfood.view.ui.screens.main.CartScreen
 import com.example.appfood.view.ui.screens.main.DetailFoodScreen
 import com.example.appfood.view.ui.screens.main.FavoriteScreen
+import com.example.appfood.view.ui.screens.main.HelpAndFaqScreen
 import com.example.appfood.view.ui.screens.main.MyOrderScreen
+import com.example.appfood.view.ui.screens.main.SettingsScreen
 import com.example.appfood.view.ui.screens.main.SuccessScreen
 import com.example.appfood.view.ui.screens.payment.MockMomoLoginScreen
 import com.example.appfood.view.ui.screens.payment.MockVnpayPayment
@@ -111,5 +114,11 @@ fun AppNavigation(viewModel: AuthViewModel?) {
             MyOrderScreen(orderViewModel,navController)
         }
 
+        composable("Settings"){ SettingsScreen(navController,
+            onLanguageClick = { /* Handle language click */ },
+            onAccountDeleteClick = { /* Handle account delete click */ }) }
+        composable("about") { AboutScreen(navController) }
+        composable("help"){ HelpAndFaqScreen(navController) }
     }
+
 }
