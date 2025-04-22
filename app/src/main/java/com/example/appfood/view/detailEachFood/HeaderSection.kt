@@ -31,7 +31,7 @@ fun HeaderSection(
     onIncrement: () -> Unit,
     onDecrement: () -> Unit,
     isFavorite: Boolean,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: (Boolean) -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -80,7 +80,9 @@ fun HeaderSection(
 
         FavoriteButton(
             isFavorite = isFavorite,
-            onClick = onFavoriteClick,
+            onClick = {
+                onFavoriteClick(isFavorite)
+            },
             modifier = Modifier.constrainAs(fav) {
                 top.linkTo(parent.top)
                 end.linkTo(parent.end)

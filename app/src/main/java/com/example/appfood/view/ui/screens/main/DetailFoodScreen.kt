@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.appfood.model.domain.FoodModel
 import com.example.appfood.view.detailEachFood.DescriptionSection
 import com.example.appfood.view.detailEachFood.FooterSection
