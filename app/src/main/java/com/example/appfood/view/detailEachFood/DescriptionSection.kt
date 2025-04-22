@@ -13,7 +13,7 @@ import com.example.appfood.R
 
 @Composable
 fun DescriptionSection(description:String){
-    Column(){
+    Column{
         Text(
             text = "Details",
             fontWeight = FontWeight.Bold,

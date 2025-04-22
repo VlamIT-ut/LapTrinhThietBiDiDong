@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,10 +22,14 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
 import com.example.appfood.R
-
+import com.example.appfood.viewModel.NotificationViewModel
 @Composable
-fun TopBar(){
+fun TopBar(navController: NavController,
+           notificationViewModel: NotificationViewModel){
+    val unreadCount by notificationViewModel.unreadCount
+
     ConstraintLayout (
         modifier = Modifier
             .padding(top = 48.dp)
@@ -37,7 +44,7 @@ fun TopBar(){
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
-                }.clickable {  }
+                }.clickable { navController.navigate("Settings") }
         )
         Column (
             modifier = Modifier
@@ -65,14 +72,34 @@ fun TopBar(){
                 fontSize = 14.sp,
             )
         }
-        Image(painter = painterResource(R.drawable.bell_icon),
-            contentDescription = null,
+        BadgedBox(
             modifier = Modifier
-                .constrainAs(notification){
+                .constrainAs(notification) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                     end.linkTo(parent.end)
-                }.clickable {  }
-        )
+                }
+                .clickable { navController.navigate("notification") },
+            badge = {
+                if (unreadCount > 0) {
+                    Badge(
+                        containerColor = Color.Red,
+                        contentColor = Color.White
+                    ) {
+                        Text(
+                            text = unreadCount.toString(),
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+        ) {
+            Image(
+                painter = painterResource(R.drawable.bell_icon),
+                contentDescription = null,
+            )
+        }
+
     }
 }

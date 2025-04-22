@@ -1,5 +1,7 @@
 package com.example.appfood.view.ui.screens.login_signup
 
+import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,6 +38,11 @@ fun SignUpScreen(navController: NavController, viewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isShowPassword by remember { mutableStateOf(false) }
+    val view = LocalView.current
+    val activityContext = remember(view) {
+        view.context as? Activity
+    }
+
     Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
         Column(
             modifier = Modifier.fillMaxSize().padding(paddingValues).
@@ -111,7 +119,14 @@ fun SignUpScreen(navController: NavController, viewModel: AuthViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
-                    onClick = { viewModel.signInWithGoogle(navController.context) },
+                    onClick = {
+                        if (activityContext != null) {
+                            viewModel.signInWithGoogle(activityContext)
+                        } else {
+                            Log.e("SignUpScreen", "Activity context is null (from LocalView). Google Sign-In will fail.")
+                            // Optionally show an error message to the user
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(Color.White),
                     modifier = Modifier.size(367.dp, 80.dp).padding(8.dp),
                     border = BorderStroke(2.dp, Color.Black),
@@ -179,6 +194,4 @@ fun SignUpScreen(navController: NavController, viewModel: AuthViewModel) {
             }
         }
     }
-
-
 }

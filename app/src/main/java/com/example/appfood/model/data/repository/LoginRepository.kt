@@ -1,6 +1,5 @@
 package com.example.appfood.model.data.repository
 
-import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.credentials.CredentialManager
@@ -12,7 +11,6 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.OAuthProvider
 import kotlinx.coroutines.tasks.await
 
 class LoginRepository(
@@ -75,20 +73,7 @@ class LoginRepository(
         }
     }
 
-    suspend fun signInWithApple(context: Context): FirebaseUser? {
-        return try {
-            val provider = OAuthProvider.newBuilder("apple.com")
-                .addCustomParameter("locale", "en")
-                .setScopes(listOf("email", "name"))
-                .build()
 
-            val result = auth.startActivityForSignInWithProvider(context as Activity, provider).await()
-            result.user
-        } catch (e: Exception) {
-            Log.e(TAG, "Apple Sign-In failed: ${e.message}", e)
-            null
-        }
-    }
 
     fun getCurrentUser(): FirebaseUser? = auth.currentUser
 
@@ -99,4 +84,14 @@ class LoginRepository(
     companion object {
         private const val TAG = "LoginRepository"
     }
+    suspend fun deleteAccount(): Boolean {
+        return try {
+            auth.currentUser?.delete()?.await()
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Account deletion failed: ${e.message}")
+            false
+        }
+    }
+
 }

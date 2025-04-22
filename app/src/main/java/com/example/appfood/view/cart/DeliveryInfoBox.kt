@@ -28,13 +28,18 @@ import com.example.appfood.model.data.repository.OrderRepository
 import com.example.appfood.model.domain.OrderModel
 import com.example.appfood.view.helper.ManagementCart
 import com.example.appfood.viewModel.LocationViewModel
-
+import com.example.appfood.viewModel.NotificationViewModel
+import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.*
 @Composable
-fun DeliveryInfoBox(navController: NavController,
-                    managementCart: ManagementCart,
-                    tax: Double,
-                    locationViewModel: LocationViewModel = viewModel()
-                    ) {
+fun DeliveryInfoBox(
+    navController: NavController,
+    managementCart: ManagementCart,
+    tax: Double,
+    locationViewModel: LocationViewModel = viewModel(),
+    notificationViewModel: NotificationViewModel = viewModel()
+) {
     var selectedMethod by rememberSaveable { mutableStateOf("Momo") }
 
     Column(
@@ -50,7 +55,8 @@ fun DeliveryInfoBox(navController: NavController,
             icon = painterResource(id = R.drawable.location),
             navController = navController
         )
-        // ✅ Hiển thị vị trí người dùng đã chọn (nếu có)
+
+        // Hiển thị vị trí người dùng đã chọn
         locationViewModel.selectedPoint?.let { point ->
             Column(modifier = Modifier.padding(top = 4.dp, start = 40.dp)) {
                 Text(
@@ -73,7 +79,6 @@ fun DeliveryInfoBox(navController: NavController,
             modifier = Modifier.padding(top = 4.dp, start = 40.dp)
         )
 
-
         Divider(modifier = Modifier.padding(vertical = 8.dp))
         PaymentSection(
             selectedMethod = selectedMethod,
@@ -87,26 +92,34 @@ fun DeliveryInfoBox(navController: NavController,
 
     Button(
         onClick = {
-            val order = OrderModel(
-                userId = "demo_user", // Cập nhật từ người dùng thật nếu có auth
-                items = managementCart.getListCart(),
-                total = managementCart.getTotalFee(),
-                tax = tax,
-                deliveryFee = 10.0,
-                paymentMethod = selectedMethod,
-                address = "Your address here",
-                latitude = locationViewModel.selectedPoint?.latitude ?: 0.0,
-                longitude = locationViewModel.selectedPoint?.longitude ?: 0.0,
+            val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+            if (currentUserId != null) {
+                val order = OrderModel(
+                    userId = currentUserId,
+                    items = managementCart.getListCart(),
+                    total = managementCart.getTotalFee(),
+                    tax = tax,
+                    deliveryFee = 10.0,
+                    paymentMethod = selectedMethod,
+                    address = locationViewModel.selectedAddress ?: "No address",
+                    latitude = locationViewModel.selectedPoint?.latitude ?: 0.0,
+                    longitude = locationViewModel.selectedPoint?.longitude ?: 0.0
+                )
 
-            )
+                orderRepo.saveOrder(order) { success ->
+                    if (success) {
+                        val message = "🎉 Đơn hàng mới đã được đặt lúc ${System.currentTimeMillis().formatAsTimeString()}!"
+                        notificationViewModel.addNotification(message)
 
-            orderRepo.saveOrder(order) { success ->
-                if (success) {
-                    Toast.makeText(context, "Order placed successfully!", Toast.LENGTH_SHORT).show()
-                    navController.navigate("success")
-                } else {
-                    Toast.makeText(context, "Failed to place order.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Order placed successfully!", Toast.LENGTH_SHORT).show()
+                        navController.navigate("success")
+                    } else {
+                        Toast.makeText(context, "Failed to place order.", Toast.LENGTH_SHORT).show()
+                    }
                 }
+
+            } else {
+                Toast.makeText(context, "You are not logged in!", Toast.LENGTH_SHORT).show()
             }
         },
         shape = RoundedCornerShape(10.dp),
@@ -118,7 +131,6 @@ fun DeliveryInfoBox(navController: NavController,
     ) {
         Text("Place Order", fontSize = 18.sp, color = Color.White)
     }
-
 }
 
 @Composable
@@ -228,4 +240,8 @@ fun PaymentOptionRow(
             )
         )
     }
+}
+fun Long.formatAsTimeString(): String {
+    val sdf = SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.getDefault())
+    return sdf.format(Date(this))
 }

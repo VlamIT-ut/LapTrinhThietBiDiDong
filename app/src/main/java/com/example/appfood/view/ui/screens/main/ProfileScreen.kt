@@ -73,40 +73,35 @@ fun ProfileScreen(navController: NavController, viewModel: AuthViewModel) {
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
-                // Menu Items
-                item {
-                    ProfileMenuItem(iconRes = R.drawable.ic_profile, title = "Profile") {
-                        // Điều hướng đến màn hình Profile chi tiết (nếu có)
-                    }
-                }
+
                 item {
                     ProfileMenuItem(iconRes = R.drawable.ic_my_orders, title = "My Orders") {
                         // Điều hướng đến màn hình My Orders
+                        navController.navigate("my_orders")
                     }
                 }
                 item {
                     ProfileMenuItem(iconRes = R.drawable.ic_delivery_address, title = "Delivery Address") {
                         // Điều hướng đến màn hình Delivery Address
-                    }
-                }
-                item {
-                    ProfileMenuItem(iconRes = R.drawable.ic_payments, title = "Payments") {
-                        // Điều hướng đến màn hình Payments
+                        navController.navigate("choose_location")
                     }
                 }
                 item {
                     ProfileMenuItem(iconRes = R.drawable.ic_contact_us, title = "Contact US") {
                         // Điều hướng đến màn hình Contact US
+                        navController.navigate("about")
                     }
                 }
                 item {
                     ProfileMenuItem(iconRes = R.drawable.ic_setting, title = "Setting") {
                         // Điều hướng đến màn hình Setting
+                        navController.navigate("Settings")
                     }
                 }
                 item {
                     ProfileMenuItem(iconRes = R.drawable.ic_help_faq, title = "Help & FAQ") {
                         // Điều hướng đến màn hình Help & FAQ
+                        navController.navigate("help")
                     }
                 }
                 item {

@@ -1,8 +1,11 @@
 package com.example.appfood.view.helper
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.appfood.model.domain.FoodModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class FavoriteManager {
 
@@ -12,19 +15,46 @@ class FavoriteManager {
     private val _toastMessage = MutableLiveData<String>()
     val toastMessage: LiveData<String> get() = _toastMessage
 
-    fun toggleFavorite(item: FoodModel) {
-        val currentList = _favoriteItems.value ?: mutableListOf()
-        val isAlreadyFavorite = currentList.any { it.Id == item.Id }
+    private val userId: String? = FirebaseAuth.getInstance().currentUser?.uid
+    private val databaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Favorites")
 
-        if (isAlreadyFavorite) {
-            currentList.removeAll { it.Id == item.Id }
-            _toastMessage.value = "${item.Title} removed from favorites"
-        } else {
-            currentList.add(item.copy(isFavorite = true))
-            _toastMessage.value = "${item.Title} added to favorites"
+    init {
+        loadFavorites()
+    }
+
+    private fun loadFavorites() {
+        userId?.let { uid ->
+            databaseRef.child(uid).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val list = mutableListOf<FoodModel>()
+                    for (child in snapshot.children) {
+                        val item = child.getValue(FoodModel::class.java)
+                        item?.let { list.add(it) }
+                    }
+                    _favoriteItems.value = list
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("FavoriteManager", "Failed to load favorites: ${error.message}")
+                }
+            })
         }
+    }
 
-        _favoriteItems.value = currentList
+    fun toggleFavorite(item: FoodModel) {
+        userId?.let { uid ->
+            val currentList = _favoriteItems.value ?: mutableListOf()
+            val isAlreadyFavorite = currentList.any { it.Id == item.Id }
+
+            if (isAlreadyFavorite) {
+                databaseRef.child(uid).child(item.Id.toString()).removeValue()
+                _toastMessage.value = "${item.Title} removed from favorites"
+            } else {
+                val favoriteItem = item.copy(isFavorite = true)
+                databaseRef.child(uid).child(item.Id.toString()).setValue(favoriteItem)
+                _toastMessage.value = "${item.Title} added to favorites"
+            }
+        }
     }
 
     fun isFavorite(item: FoodModel): Boolean {
@@ -32,9 +62,9 @@ class FavoriteManager {
     }
 
     fun removeFavorite(food: FoodModel) {
-        val current = _favoriteItems.value?.toMutableList() ?: mutableListOf()
-        current.removeAll { it.Id == food.Id }
-        _favoriteItems.value = current
-        _toastMessage.value = "${food.Title} removed from favorites"
+        userId?.let { uid ->
+            databaseRef.child(uid).child(food.Id.toString()).removeValue()
+            _toastMessage.value = "${food.Title} removed from favorites"
+        }
     }
 }

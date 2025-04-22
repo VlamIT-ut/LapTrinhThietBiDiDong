@@ -11,10 +11,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
 
 class MainRepository {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
-
     fun loadCategory():LiveData<MutableList<CategoryModel>>{
         Log.d("Firebase", "Database URL: ${firebaseDatabase.reference.database.reference}")
         val listData:MutableLiveData<MutableList<CategoryModel>> =MutableLiveData()
@@ -104,6 +106,15 @@ class MainRepository {
         })
 
         return foodData
+    }
+    // Thêm hàm để load tất cả món ăn
+    fun  loadAllFoods(): Flow<List<FoodModel>> = flow {
+        val snapshot = firebaseDatabase.getReference("Foods").get().await()
+        val foods = mutableListOf<FoodModel>()
+        for (child in snapshot.children) {
+            child.getValue(FoodModel::class.java)?.let { foods.add(it) }
+        }
+        emit(foods)
     }
 
 }
