@@ -1,4 +1,6 @@
 <resources>
+    <string name="default_web_client_id">780462432833-9p91begbitiaifms6tu2q1a2l87bjsci.apps.googleusercontent.com</string>
+
     <string name="app_name" translatable="false">AppFood</string>
     <string name="splashSubtitle" translatable="false">Shared and delightful,for an easy and
     enjoyable food ordering experience</string>
