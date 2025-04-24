@@ -63,7 +63,7 @@ fun SettingsScreen(
 
         }
         },
-            backgroundColor = colorResource(R.color.grey)) },
+            backgroundColor = colorResource(R.color.white)) },
     ) { padding ->
         Column(modifier = Modifier
             .fillMaxSize()

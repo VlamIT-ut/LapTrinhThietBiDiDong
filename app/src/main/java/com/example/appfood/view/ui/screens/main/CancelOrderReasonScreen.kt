@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +44,7 @@ fun CancelOrderReasonScreen(
     viewModel: OrderViewModel = viewModel()
 ) {
     var selectedReason by remember { mutableStateOf<String?>(null) }
-    val reasons = listOf("Đặt nhầm", "Thời gian giao hàng lâu", "Thay đổi ý định", "Giá cao", "Lý do khác")
+    val reasons = listOf("Wrong order", "Long delivery time", "Change of mind", "High price", "Other reasons")
 
     Scaffold(
         modifier = Modifier.fillMaxSize().statusBarsPadding(),
@@ -69,14 +70,14 @@ fun CancelOrderReasonScreen(
 
         }
         },
-            backgroundColor = colorResource(R.color.grey)
+            backgroundColor = colorResource(R.color.white)
         ) },
     ) { padding ->
         Column(modifier = Modifier
             .padding(padding)
             .padding(16.dp)) {
 
-            Text("Vui lòng chọn lý do bạn huỷ đơn hàng:", fontWeight = FontWeight.Bold)
+            Text("Please select reason for your order:", fontWeight = FontWeight.Bold)
 
             Spacer(modifier = Modifier.height(8.dp))
             reasons.forEach { reason ->
@@ -104,9 +105,11 @@ fun CancelOrderReasonScreen(
                     }
                 },
                 enabled = selectedReason != null,
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier.align(Alignment.End),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.orange),
+                        contentColor = colorResource(R.color.white))
             ) {
-                Text("Xác nhận huỷ")
+                Text("Confirm cancellation")
             }
         }
     }

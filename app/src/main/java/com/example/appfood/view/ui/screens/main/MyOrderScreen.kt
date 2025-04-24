@@ -72,7 +72,7 @@ fun MyOrderScreen(
                         }
                     }
                 },
-                backgroundColor = colorResource(R.color.grey)
+                backgroundColor = colorResource(R.color.white)
             )
         },
         bottomBar = { MyBottomBar(navController) }

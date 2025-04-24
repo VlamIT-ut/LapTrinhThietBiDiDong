@@ -59,7 +59,7 @@ fun AboutScreen(navController: NavController) {
 
         }
         },
-            backgroundColor = colorResource(R.color.grey)
+            backgroundColor = colorResource(R.color.white)
         ) },
     ) { padding ->
         Column(

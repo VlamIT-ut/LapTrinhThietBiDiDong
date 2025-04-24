@@ -57,7 +57,7 @@ fun ProfileScreen(navController: NavController, viewModel: AuthViewModel) {
 
         }
         },
-            backgroundColor = colorResource(R.color.grey)) },
+            backgroundColor = colorResource(R.color.white)) },
         bottomBar = { MyBottomBar(navController) },
         content = { innerPadding ->
             LazyColumn(

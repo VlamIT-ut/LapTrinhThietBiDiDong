@@ -41,7 +41,7 @@ fun MyBottomBar(navController: NavController) {
             .fillMaxWidth()
             .navigationBarsPadding(),
         elevation = 3.dp,
-        backgroundColor = colorResource(id = R.color.grey),
+        backgroundColor = colorResource(id = R.color.white),
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -50,7 +50,7 @@ fun MyBottomBar(navController: NavController) {
         ) {
             items.forEach { (route, icon, desc) ->
                 val isSelected = currentRoute == route
-                val bgColor = if (isSelected) Color.White else colorResource(id = R.color.grey)
+                val bgColor = if (isSelected) colorResource(R.color.white) else colorResource(id = R.color.white)
                 val iconColor = if (isSelected) colorResource(id = R.color.orange) else Color.Black
 
                 Button(
