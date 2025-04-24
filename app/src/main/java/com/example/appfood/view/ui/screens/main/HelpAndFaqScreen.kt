@@ -89,7 +89,7 @@ fun HelpAndFaqScreen(navController: NavController) {
 
         }
         },
-            backgroundColor = colorResource(R.color.grey)
+            backgroundColor = colorResource(R.color.white)
         ) },
     ) { innerPadding ->
         LazyColumn(

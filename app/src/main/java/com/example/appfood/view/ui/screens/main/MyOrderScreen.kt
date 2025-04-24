@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.appfood.view.ui.screens.main
 
 import android.annotation.SuppressLint
@@ -31,7 +29,10 @@ import java.util.Locale
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MyOrderScreen(viewModel: OrderViewModel = viewModel(),navController: NavController) {
+fun MyOrderScreen(
+    viewModel: OrderViewModel = viewModel(),
+    navController: NavController
+) {
     val orders by viewModel.orders.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -39,7 +40,9 @@ fun MyOrderScreen(viewModel: OrderViewModel = viewModel(),navController: NavCont
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize().statusBarsPadding(),
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
         topBar = {
             com.google.accompanist.insets.ui.TopAppBar(
                 title = {
@@ -67,14 +70,13 @@ fun MyOrderScreen(viewModel: OrderViewModel = viewModel(),navController: NavCont
                             )
                             Spacer(modifier = Modifier.width(48.dp))
                         }
-
                     }
                 },
-                backgroundColor = colorResource(R.color.grey)
+                backgroundColor = colorResource(R.color.white)
             )
         },
         bottomBar = { MyBottomBar(navController) }
-    ) {innerPadding ->
+    ) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
             if (orders.isEmpty()) {
                 item {
@@ -84,12 +86,12 @@ fun MyOrderScreen(viewModel: OrderViewModel = viewModel(),navController: NavCont
                             .padding(innerPadding),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("No favorite items yet!")
+                        Text("No Place order items yet!")
                     }
                 }
             } else {
                 items(orders) { order ->
-                    OrderItem(order)
+                    OrderItem(order = order, navController = navController)
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
@@ -98,7 +100,7 @@ fun MyOrderScreen(viewModel: OrderViewModel = viewModel(),navController: NavCont
 }
 
 @Composable
-fun OrderItem(order: OrderModel) {
+fun OrderItem(order: OrderModel, navController: NavController) {
     val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     val dateString = formatter.format(Date(order.timestamp))
 
@@ -119,6 +121,31 @@ fun OrderItem(order: OrderModel) {
                 order.items.forEach { item ->
                     Text("- ${item.Title} x${item.numberInCart}")
                 }
+            }
+
+            if (!order.isCancelled) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Button(
+                        onClick = {
+                            navController.navigate("cancel_order/${order.orderId}")
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                    ) {
+                        Text("Cancel order", color = Color.White)
+                    }
+                }
+            } else {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    "Order was successfully canceled",
+                    color = Color.Red,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.End)
+                )
             }
         }
     }

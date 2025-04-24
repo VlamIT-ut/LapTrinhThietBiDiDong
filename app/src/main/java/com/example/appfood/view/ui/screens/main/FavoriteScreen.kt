@@ -17,7 +17,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -60,8 +59,7 @@ fun FavoriteScreen(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Image(
@@ -74,12 +72,12 @@ fun FavoriteScreen(
                             text = "Favorite",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            color = colorResource(R.color.orange)
+                            color = colorResource(R.color.orange),
                         )
-                        Spacer(modifier = Modifier.width(24.dp))
+                        Spacer(modifier = Modifier.width(48.dp))
                     }
                 },
-                backgroundColor = Color.White
+                backgroundColor = colorResource(R.color.white)
             )
         },
         bottomBar = { MyBottomBar(navController) },
@@ -126,7 +124,6 @@ fun FavoriteItem(
             .fillMaxWidth()
             .border(1.dp, colorResource(R.color.grey), shape = RoundedCornerShape(10.dp))
             .clickable {
-                // 👉 Khi click vào toàn bộ item, điều hướng tới màn hình chi tiết
                 navController.navigate("detail/${item.Id}")
             }
     ) {

@@ -13,15 +13,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,12 +31,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.appfood.R
+import com.example.appfood.viewModel.OrderViewModel
 import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.insets.ui.TopAppBar
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfood.R
 
 @Composable
-fun AboutScreen(navController: NavController) {
+fun CancelOrderReasonScreen(
+    orderId: String,
+    navController: NavController,
+    viewModel: OrderViewModel = viewModel()
+) {
+    var selectedReason by remember { mutableStateOf<String?>(null) }
+    val reasons = listOf("Wrong order", "Long delivery time", "Change of mind", "High price", "Other reasons")
+
     Scaffold(
         modifier = Modifier.fillMaxSize().statusBarsPadding(),
         topBar = {TopAppBar(title = { Box(modifier = Modifier.fillMaxWidth(),
@@ -48,7 +59,7 @@ fun AboutScreen(navController: NavController) {
                     modifier = Modifier.clickable { navController.popBackStack() }
                 )
                 Text(
-                    text = "About US",
+                    text = "Cancel order",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.orange),
@@ -62,37 +73,43 @@ fun AboutScreen(navController: NavController) {
             backgroundColor = colorResource(R.color.white)
         ) },
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "About Us",
-                color = Color.Red,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
+        Column(modifier = Modifier
+            .padding(padding)
+            .padding(16.dp)) {
+
+            Text("Please select reason for your order:", fontWeight = FontWeight.Bold)
+
             Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Welcome to Food Delivery – your go-to food delivery app for fast, convenient, and reliable service! " +
-                        "Our mission is to connect you with the best restaurants, eateries, and street food vendors in town. " +
-                        "Whether you’re craving a quick snack, a hearty dinner, or a refreshing drink, Food Delivery is here to deliver.",
-                style = MaterialTheme.typography.bodyMedium
-            )
+            reasons.forEach { reason ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { selectedReason = reason }
+                        .padding(vertical = 4.dp)
+                ) {
+                    RadioButton(
+                        selected = selectedReason == reason,
+                        onClick = { selectedReason = reason }
+                    )
+                    Text(reason, modifier = Modifier.padding(start = 8.dp))
+                }
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+            Button(
+                onClick = {
+                    if (selectedReason != null) {
+                        viewModel.deleteOrder(orderId)
+                        navController.popBackStack() // Quay lại
+                    }
+                },
+                enabled = selectedReason != null,
+                modifier = Modifier.align(Alignment.End),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.orange),
+                        contentColor = colorResource(R.color.white))
             ) {
-                Text(
-                    text = "Review Application",
-                    color = Color.Red,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Icon(Icons.Default.Star, contentDescription = "Star", tint = Color.Red)
+                Text("Confirm cancellation")
             }
         }
     }

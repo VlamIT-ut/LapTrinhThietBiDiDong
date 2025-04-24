@@ -38,6 +38,8 @@ import com.example.appfood.viewModel.MainViewModel
 import com.example.appfood.viewModel.NotificationViewModel
 import com.example.appfood.viewModel.OrderViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfood.view.ui.screens.main.CancelOrderReasonScreen
+import kotlinx.coroutines.delay
 
 @Composable
 fun AppNavigation(authViewModel: AuthViewModel,mainViewModel: MainViewModel) {
@@ -54,9 +56,20 @@ fun AppNavigation(authViewModel: AuthViewModel,mainViewModel: MainViewModel) {
         composable("welcome") {
             // Màn Splash chỉ hiển thị lần đầu
             SplashScreen(navController)
+
             LaunchedEffect(Unit) {
-                authViewModel.completeFirstLaunch()  // Cập nhật không còn là lần đầu
+                delay(1500)
+                if (isFirstLaunch) {
+                    authViewModel.completeFirstLaunch()
+                    navController.navigate("get_started_1")
+                } else {
+                    navController.navigate("login") {
+                        popUpTo("welcome") { inclusive = true }
+                    }
+                }
             }
+
+
         }
         composable("get_started_1") { GetStartedScreen1(navController) }
         composable("get_started_2") { GetStartedScreen2(navController) }
@@ -130,6 +143,11 @@ fun AppNavigation(authViewModel: AuthViewModel,mainViewModel: MainViewModel) {
         composable("about") { AboutScreen(navController) }
         composable("help"){ HelpAndFaqScreen(navController) }
         composable("notification"){ NotificationScreen(navController,notificationViewModel) }
+        composable("cancel_order/{orderId}") { backStackEntry ->
+            val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
+            CancelOrderReasonScreen(orderId = orderId, navController = navController)
+        }
+
     }
 
 }
