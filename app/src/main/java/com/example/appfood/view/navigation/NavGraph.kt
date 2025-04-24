@@ -38,6 +38,7 @@ import com.example.appfood.viewModel.MainViewModel
 import com.example.appfood.viewModel.NotificationViewModel
 import com.example.appfood.viewModel.OrderViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfood.view.ui.screens.main.CancelOrderReasonScreen
 
 @Composable
 fun AppNavigation(authViewModel: AuthViewModel,mainViewModel: MainViewModel) {
@@ -130,6 +131,11 @@ fun AppNavigation(authViewModel: AuthViewModel,mainViewModel: MainViewModel) {
         composable("about") { AboutScreen(navController) }
         composable("help"){ HelpAndFaqScreen(navController) }
         composable("notification"){ NotificationScreen(navController,notificationViewModel) }
+        composable("cancel_order/{orderId}") { backStackEntry ->
+            val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
+            CancelOrderReasonScreen(orderId = orderId, navController = navController)
+        }
+
     }
 
 }

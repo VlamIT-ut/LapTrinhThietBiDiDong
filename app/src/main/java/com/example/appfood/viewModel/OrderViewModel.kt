@@ -23,8 +23,12 @@ class OrderViewModel : ViewModel() {
                     val list = mutableListOf<OrderModel>()
                     for (child in snapshot.children) {
                         val order = child.getValue(OrderModel::class.java)
-                        if (order != null) {
-                            list.add(order)
+                        order?.let {
+                            // Fallback nếu thiếu trường isCancelled
+                            if (child.child("isCancelled").value == null) {
+                                it.isCancelled = false
+                            }
+                            list.add(it)
                         }
                     }
                     _orders.value = list
@@ -33,4 +37,12 @@ class OrderViewModel : ViewModel() {
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
+
+
+    fun deleteOrder(orderId: String) {
+        dbRef.child(orderId).removeValue().addOnSuccessListener {
+            loadOrders() // refresh danh sách
+        }
+    }
+
 }
