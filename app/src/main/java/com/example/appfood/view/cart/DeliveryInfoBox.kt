@@ -109,12 +109,13 @@ fun DeliveryInfoBox(
                 orderRepo.saveOrder(order) { success ->
                     if (success) {
                         val message = "🎉 Đơn hàng mới đã được đặt lúc ${System.currentTimeMillis().formatAsTimeString()}!"
-                        notificationViewModel.addNotification(message)
+                        notificationViewModel.addNotification(message) // Sẽ trigger cả in-app và system notification
 
                         Toast.makeText(context, "Order placed successfully!", Toast.LENGTH_SHORT).show()
                         navController.navigate("success")
-                    } else {
-                        Toast.makeText(context, "Failed to place order.", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(context, "Failed to place order!", Toast.LENGTH_SHORT).show()
                     }
                 }
 
