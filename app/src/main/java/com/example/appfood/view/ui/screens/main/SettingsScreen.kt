@@ -14,6 +14,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Divider
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Switch
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -77,7 +81,10 @@ fun SettingsScreen(
             SettingItem(
                 title = stringResource(R.string.change_language),
                 value = langName,
-                onClick = onLanguageToggle
+                onClick = onLanguageToggle,
+                showSwitch = true,
+                switchChecked = currentLang == "vi",
+                onSwitchChange = onLanguageToggle
             )
             Divider()
             SettingItem(title = stringResource(R.string.help), enabled = false, onClick = {})
@@ -88,7 +95,7 @@ fun SettingsScreen(
 }
 
 @Composable
-fun SettingItem(title: String, value: String? = null, enabled: Boolean = true, onClick: () -> Unit) {
+fun SettingItem(title: String, value: String? = null, enabled: Boolean = true, onClick: () -> Unit, showSwitch: Boolean = false, switchChecked: Boolean = false, onSwitchChange: (() -> Unit)? = null) {
     val textColor = if (enabled) Color.Black else Color.Gray
     val modifier = if (enabled) Modifier
         .fillMaxWidth()
@@ -99,11 +106,25 @@ fun SettingItem(title: String, value: String? = null, enabled: Boolean = true, o
 
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(text = title, color = textColor)
-        if (value != null) {
-            Text(text = value, color = textColor)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if (value != null) {
+                Text(text = value, color = textColor)
+            }
+            if (showSwitch && onSwitchChange != null) {
+                Switch(
+                    checked = switchChecked,
+                    onCheckedChange = { onSwitchChange() },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = colorResource(R.color.orange),
+                        uncheckedThumbColor = colorResource(R.color.grey)
+                    ),
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
         }
     }
 }

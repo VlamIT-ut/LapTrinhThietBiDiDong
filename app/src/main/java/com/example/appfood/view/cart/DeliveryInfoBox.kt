@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,8 +51,8 @@ fun DeliveryInfoBox(
             .padding(8.dp)
     ) {
         InfoItem(
-            title = "Your Delivery Address",
-            content = "Geocoder",
+            title = stringResource(R.string.your_delivery_address),
+            content = stringResource(R.string.geocoder),
             icon = painterResource(id = R.drawable.location),
             navController = navController
         )
@@ -73,7 +74,7 @@ fun DeliveryInfoBox(
                 }
             }
         } ?: Text(
-            text = "Location not saved on map",
+            stringResource(R.string.location_not),
             fontSize = 14.sp,
             color = Color.Gray,
             modifier = Modifier.padding(top = 4.dp, start = 40.dp)
@@ -130,7 +131,7 @@ fun DeliveryInfoBox(
             .fillMaxWidth()
             .height(50.dp)
     ) {
-        Text("Place Order", fontSize = 18.sp, color = Color.White)
+        Text(stringResource(R.string.place_order), fontSize = 18.sp, color = Color.White)
     }
 }
 
@@ -171,7 +172,7 @@ fun PaymentSection(
     onMethodSelected: (String) -> Unit,
     navController: NavController
 ) {
-    Text(text = "Payment Method", fontSize = 14.sp, color = Color.Gray)
+    Text(text = stringResource(R.string.payment_method), fontSize = 14.sp, color = Color.Gray)
     Spacer(modifier = Modifier.height(4.dp))
 
     PaymentOptionRow(
@@ -191,7 +192,7 @@ fun PaymentSection(
     )
 
     PaymentOptionRow(
-        method = "Cash on Delivery",
+        method = stringResource(R.string.cash_on_delivery),
         selectedMethod = selectedMethod,
         onSelected = { onMethodSelected("Cash on Delivery") },
         icon = painterResource(id = R.drawable.credit_card),

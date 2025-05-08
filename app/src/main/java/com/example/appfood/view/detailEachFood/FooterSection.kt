@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,7 +57,7 @@ fun FooterSection(onAddToCartClick: () -> Unit, totalPrice: Double, modifier: Mo
                 modifier = Modifier.size(20.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
-            Text("Order", fontSize = 20.sp, color = Color.White)
+            Text(stringResource(R.string.order), fontSize = 20.sp, color = Color.White)
         }
         Column(modifier = Modifier
             .width(140.dp)
@@ -67,7 +68,7 @@ fun FooterSection(onAddToCartClick: () -> Unit, totalPrice: Double, modifier: Mo
                 start.linkTo(parent.start)
             }
         ){
-            Text("Total Price", fontSize = 18.sp,
+            Text(stringResource(R.string.total_price), fontSize = 18.sp,
                 color = colorResource(R.color.darkPurple))
             val decimalFormat = DecimalFormat("#.00")
             Text("$${decimalFormat.format(totalPrice)}",

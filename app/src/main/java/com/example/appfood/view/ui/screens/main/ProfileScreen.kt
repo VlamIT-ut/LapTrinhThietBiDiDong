@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,7 +47,7 @@ fun ProfileScreen(navController: NavController, viewModel: AuthViewModel) {
                     modifier = Modifier.clickable { navController.popBackStack() }
                 )
                 Text(
-                    text = "Profile",
+                    stringResource(R.string.profile),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.orange),
@@ -75,37 +76,37 @@ fun ProfileScreen(navController: NavController, viewModel: AuthViewModel) {
 
 
                 item {
-                    ProfileMenuItem(iconRes = R.drawable.ic_my_orders, title = "My Orders") {
+                    ProfileMenuItem(iconRes = R.drawable.ic_my_orders, title = stringResource(R.string.my_order)) {
                         // Điều hướng đến màn hình My Orders
                         navController.navigate("my_orders")
                     }
                 }
                 item {
-                    ProfileMenuItem(iconRes = R.drawable.ic_delivery_address, title = "Delivery Address") {
+                    ProfileMenuItem(iconRes = R.drawable.ic_delivery_address, title = stringResource(R.string.delivery_address)) {
                         // Điều hướng đến màn hình Delivery Address
                         navController.navigate("choose_location")
                     }
                 }
                 item {
-                    ProfileMenuItem(iconRes = R.drawable.ic_contact_us, title = "Contact US") {
+                    ProfileMenuItem(iconRes = R.drawable.ic_contact_us, title = stringResource(R.string.contact_us)) {
                         // Điều hướng đến màn hình Contact US
                         navController.navigate("about")
                     }
                 }
                 item {
-                    ProfileMenuItem(iconRes = R.drawable.ic_setting, title = "Setting") {
+                    ProfileMenuItem(iconRes = R.drawable.ic_setting, title = stringResource(R.string.settings)) {
                         // Điều hướng đến màn hình Setting
                         navController.navigate("Settings")
                     }
                 }
                 item {
-                    ProfileMenuItem(iconRes = R.drawable.ic_help_faq, title = "Help & FAQ") {
+                    ProfileMenuItem(iconRes = R.drawable.ic_help_faq, title = stringResource(R.string.help_and_faq)) {
                         // Điều hướng đến màn hình Help & FAQ
                         navController.navigate("help")
                     }
                 }
                 item {
-                    ProfileMenuItem(iconRes = R.drawable.ic_logout, title = "Log out", iconTint = Color.Red) {
+                    ProfileMenuItem(iconRes = R.drawable.ic_logout, title = stringResource(R.string.logout), iconTint = Color.Red) {
                         viewModel.signOut()
                         navController.navigate("login") {
                             popUpTo("home") { inclusive = true }

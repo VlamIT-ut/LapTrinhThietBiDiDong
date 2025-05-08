@@ -21,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -69,7 +70,7 @@ fun FavoriteScreen(
                                 .clickable { navController.popBackStack() }
                         )
                         Text(
-                            text = "Favorite",
+                           stringResource(R.string.favorite),
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
                             color = colorResource(R.color.orange),
@@ -89,7 +90,7 @@ fun FavoriteScreen(
                         .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("No favorite items yet!")
+                    Text(stringResource(R.string.no_favorite_items))
                 }
             } else {
                 LazyColumn(

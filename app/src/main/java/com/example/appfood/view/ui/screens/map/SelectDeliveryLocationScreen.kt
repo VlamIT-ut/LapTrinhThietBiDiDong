@@ -12,11 +12,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.appfood.R
 import com.example.appfood.viewModel.LocationViewModel
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.Dispatchers
@@ -41,8 +44,9 @@ fun DeliveryLocationScreen(
         topBar = {
             Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                 Text(
-                    text = "Address",
+                   stringResource(R.string.address),
                     fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -52,7 +56,7 @@ fun DeliveryLocationScreen(
                         searchQuery = it
                         locationViewModel.searchAddressSuggestions(context, searchQuery)
                     },
-                    label = { Text("Search address") },
+                    label = { Text(stringResource(R.string.search_address)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 if (locationViewModel.suggestions.isNotEmpty()) {
@@ -104,10 +108,10 @@ fun DeliveryLocationScreen(
                         locationViewModel.updateSelectedAddress("Tâm bản đồ mặc định")
                         locationViewModel.setMapCenter(defaultPoint)
                     }) {
-                        Text("Reset map")
+                        Text(stringResource(R.string.reset_map))
                     }
                     Button(onClick = { navController.popBackStack() }) {
-                        Text("Confirm location")
+                        Text(stringResource(R.string.confirm_location))
                     }
                 }
             }

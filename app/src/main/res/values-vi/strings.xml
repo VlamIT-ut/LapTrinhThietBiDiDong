@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    setting -->
     <string name="settings">Cài đặt</string>
     <string name="change_language">Thay đổi ngôn ngữ</string>
     <string name="language_english">English</string>
@@ -7,4 +8,99 @@
     <string name="help">Trợ giúp</string>
     <string name="request_account_deletion">Yêu cầu xóa tài khoản</string>
     <string name="delete_account">Xóa tài khoản</string>
+<!--    login-signup-->
+    <string name="login_title">Đăng nhập vào Food Delivery</string>
+    <string name="signup_title">Đăng ký vào Food Delivery</string>
+    <string name ="email">Email</string>
+    <string name="enter_email">Nhập Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="enter_password">Nhập mật khẩu</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="continue_button">Tiếp tục</string>
+    <string name="or">Hoặc</string>
+    <string name="continue_with_google">Tiếp tục với Google</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="login">Đăng nhập</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="already_have_account">Đã có tài khoản?</string>
+    <string name="dont_have_account">Chưa có tài khoản?</string>
+<!--    cart -->
+    <string name="cart">Giỏ hàng</string>
+    <string name="delivery">Vận chuyển</string>
+    <string name="no_cart_items">Chưa có sản phẩm trong giỏ hàng!</string>
+    <string name="order_summary">Tóm tắt đơn hàng</string>
+    <string name="information">Thông tin</string>
+    <string name="subtotal">Tổng tiền: </string>
+    <string name="total_tax">Thuế: </string>
+    <string name="total">Tổng: </string>
+    <string name="place_order">Đặt hàng</string>
+    <string name="order">Đặt hàng</string>
+    <string name="total_price">Tổng tiền: </string>
+<!--    notification -->
+    <string name="notification">Thông báo</string>
+<!--address -->
+    <string name="your_delivery_address">Địa chỉ giao hàng của bạn</string>
+    <string name="geocoder">Geocoder</string>
+    <string name="choose_location">Chọn vị trí</string>
+    <string name="location_not">Vị trí không được lưu trên bản đồ</string>
+<!--    payment -->
+    <string name="payment">Thanh toán</string>
+    <string name="payment_method">Phương thức thanh toán</string>
+    <string name="cash_on_delivery">Thanh toán khi nhận hàng</string>
+<!--    home-->
+    <string name="chose_category">Chọn danh mục</string>"
+    <string name="search">Bạn muốn ăn gì</string>"
+    <string name="search_result">Kết quả tìm kiếm</string>"
+    <string name="list_of_dishes">Danh sách món ăn</string>"
+    <string name="detail">Chi tiết</string>"
+<!--    about us -->
+    <string name="about_us">Về chúng tôi</string>
+    <string name="review_application">Đánh giá ứng dụng</string>
+    <string name="description_about_us">Chào mừng đến với Food Delivery – ứng dụng giao đồ ăn nhanh chóng, tiện lợi và đáng tin cậy của bạn! " +
+"Sứ mệnh của chúng tôi là kết nối bạn với các nhà hàng, quán ăn và người bán đồ ăn đường phố tốt nhất trong thị trấn." +
+"Cho dù bạn đang thèm một bữa ăn nhẹ nhanh, một bữa tối thịnh soạn hay một thức uống giải khát, Food Delivery đều có mặt để giao hàng."
+    </string>
+    <string name="favorite">Yêu thích</string>
+    <string name="no_favorite_items">Chưa có sản phẩm yêu thích!</string>
+    <string name="help_and_faq">Trợ giúp và thường gặp</string>
+    <string name="faq_title">Câu hỏi thường gặp</string>
+    <string name="faq_question_1">Bạn có thể đặt hàng không?</string>
+    <string name="faq_answer_1">Bạn có thể duyệt qua các nhà hàng và món ăn, sau đó thêm các món ăn yêu thích vào giỏ hàng và tiến hành thanh toán.</string>
+    <string name="faq_question_2">Tôi có thể hủy hoặc thay đổi đơn hàng của mình không?</string>
+    <string name="faq_answer_2">Đơn hàng chỉ có thể được thay đổi hoặc hủy trước khi nhà hàng xác nhận đơn hàng.</string>
+    <string name="faq_question_3">Tôi có thể theo dõi việc giao hàng của mình như thế nào?</string>
+    <string name="faq_answer_3">Sau khi đặt hàng, hãy vào "Đơn hàng của tôi" để xem các cập nhật theo dõi theo thời gian thực.</string>
+    <string name="faq_question_4">Tôi có thể thanh toán bằng những phương thức nào?</string>
+    <string name="faq_answer_4">Chúng tôi chấp nhận thẻ tín dụng/tiền mặt, ví điện tử như MoMo và ZaloPay và thanh toán khi nhận hàng.</string>
+<!--    my order -->
+    <string name="my_order">Đơn hàng của tôi</string>
+    <string name="no_order_items">Chưa có sản phẩm đơn hàng!</string>
+    <string name="canceled_order">Huỷ đơn hàng</string>
+    <string name="order_canceled">Đơn hàng đã được hủy thành công</string>"
+<!--    profile -->
+    <string name="profile">Hồ sơ</string>
+    <string name="delivery_address">Dia chỉ giao hàng</string>
+    <string name="contact_us"> Liên hệ chúng tôi</string>
+    <string name="back_to_home">Quay lại trang chủ</string>"
+    <string name="order_placed_successfully">Đặt hàng thành công!</string>
+    <string name="address">Địa chỉ</string>
+    <string name="search_address">Tìm kiếm địa chỉ</string>
+    <string name="reset_map">Làm mới bản đồ</string>
+    <string name="confirm_location">Xác nhận vị trí</string>
+    <string name="skip">Bỏ qua</string>
+    <string name="title_getstarted1">Đặt đồ ăn dễ dàng, bất kỳ lúc nào, bất kỳ đâu</string>
+    <string name="title_getstarted2">Tùy chọn vô hạn, giao hàng nhanh chóng</string>
+    <string name="title_getstarted3">Theo dõi đơn hàng, mở khóa ưu đãi tuyệt vời</string>
+    <string name="subtitle_getstarted1">Chỉ cần vài thao tác chạm, món ăn yêu thích của bạn sẽ được giao đến tận nơi, bất kể bạn ở đâu hay vào thời gian nào</string>
+    <string name="subtitle_getstarted2">Khám phá hàng ngàn món ăn từ nhà hàng yêu thích của bạn,được giao đến nhà bạn trong ít phút với vài thao tác chạm</string>
+    <string name="subtitle_getstarted3">Biết đồ ăn của bạn đang ở đâu với tính năng theo dõi thời gian thực và tận hưởng các ưu đãi độc quyền để mỗi đơn hàng trở nên hấp dẫn hơn</string>
+    <string name="next">Next</string>
+    <string name="please_select_reason">Vui lòng chọn lý do của đơn hàng của bạn:</string>
+    <string name="wrong_order">Sai món</string>
+    <string name="long_delivery_time">Thời gian giao hàng dài</string>
+    <string name="change_of_mind">Đổi ý</string>
+    <string name="high_price">Giá cao</string>
+    <string name="other_reasons">Lý do khác</string>
+    <string name="confirm_cancellation">Xác nhận hủy đơn hàng</string>
+
 </resources>

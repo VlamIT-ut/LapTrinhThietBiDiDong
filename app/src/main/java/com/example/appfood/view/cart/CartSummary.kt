@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.appfood.R
@@ -36,7 +37,7 @@ fun CartSummary(itemTotal: Double, tax: Double, delivery: Double) {
                 .padding(top = 8.dp)
         ) {
             Text(
-                text = "SUBTOTAL: ",
+               stringResource(R.string.subtotal),
                 Modifier.weight(1f),
                 color = colorResource(R.color.darkPurple)
             )
@@ -49,7 +50,7 @@ fun CartSummary(itemTotal: Double, tax: Double, delivery: Double) {
                 .padding(top = 16.dp)
         ) {
             Text(
-                text = "Delivery: ",
+               stringResource(R.string.delivery),
                 Modifier.weight(1f),
                 color = colorResource(R.color.darkPurple)
             )
@@ -62,7 +63,7 @@ fun CartSummary(itemTotal: Double, tax: Double, delivery: Double) {
                 .padding(top = 16.dp)
         ) {
             Text(
-                text = "Total Tax: ",
+               stringResource(R.string.total_tax),
                 Modifier.weight(1f),
                 color = colorResource(R.color.darkPurple)
             )
@@ -79,7 +80,7 @@ fun CartSummary(itemTotal: Double, tax: Double, delivery: Double) {
                 .padding(top = 16.dp)
         ) {
             Text(
-                text = "Total: ",
+                stringResource(R.string.total),
                 Modifier.weight(1f),
                 fontWeight = FontWeight.Bold,
                 color = colorResource(R.color.darkPurple)

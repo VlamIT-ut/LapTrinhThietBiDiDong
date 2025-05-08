@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -64,7 +65,7 @@ fun GetStartedScreen1(navController: NavController) {
 
             // Skip button
             Text(
-                text = "skip",
+               stringResource(R.string.skip),
                 color = colorResource(R.color.orange),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
@@ -82,7 +83,7 @@ fun GetStartedScreen1(navController: NavController) {
 
            // Tiêu đề
            Text(
-               text = "Order Easily, Anytime, Anywhere",
+               stringResource(R.string.title_getstarted1),
                color = colorResource(R.color.orange),
                fontSize = 20.sp,
                fontWeight = FontWeight.Bold,
@@ -93,8 +94,7 @@ fun GetStartedScreen1(navController: NavController) {
 
            // Nội dung mô tả
            Text(
-               text = "Just a few taps, and your favorite food is on its way, " +
-                       "no matter where you are or what time it is",
+              stringResource(R.string.subtitle_getstarted1),
                fontSize = 14.sp,
                color = Color.White,
                textAlign = TextAlign.Center,
@@ -108,7 +108,7 @@ fun GetStartedScreen1(navController: NavController) {
             modifier = Modifier.fillMaxWidth().height(56.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.orange),
                 contentColor = Color.White),) {
-            Text(text = "Next", fontSize = 16.sp, color = Color.White)
+            Text(stringResource(R.string.next), fontSize = 16.sp, color = Color.White)
         }
     }
 

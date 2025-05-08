@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,6 +25,7 @@ import com.example.appfood.view.navigation.MyBottomBar
 import com.example.appfood.view.navigation.TopBar
 import com.example.appfood.viewModel.MainViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfood.R
 import com.example.appfood.model.data.local.UserPreferences
 import kotlinx.coroutines.launch
 
@@ -98,7 +100,7 @@ fun HomeScreen(navController: NavController) {
                 }
                 item {
                     Text(
-                        text = if (searchText.isNotEmpty()) "Search results" else "List of dishes",
+                        text = if (searchText.isNotEmpty()) stringResource(R.string.search_result) else stringResource(R.string.list_of_dishes),
                         modifier = Modifier.padding(16.dp),
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp

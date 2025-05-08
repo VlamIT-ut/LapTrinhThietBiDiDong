@@ -19,6 +19,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,7 +32,7 @@ fun CategorySection(categories: SnapshotStateList<CategoryModel>, showCategoryLo
                     navController: NavController
 ) {
     Text(
-        text = "Choose Category",
+        text = stringResource(R.string.chose_category),
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)

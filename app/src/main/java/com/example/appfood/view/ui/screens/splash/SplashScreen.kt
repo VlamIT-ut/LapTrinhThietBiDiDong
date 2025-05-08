@@ -70,7 +70,7 @@ fun SplashScreen(navController: NavController){
             withStyle(style = SpanStyle(color = colorResource(R.color.orange))){
                 append("\nFood Delivery App")
             }
-            append("\nexprience food perfection delivered")
+            append("\nexperience food perfection delivered")
         }
         Text(
             text = styledText,

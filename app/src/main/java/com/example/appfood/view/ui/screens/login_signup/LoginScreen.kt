@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -52,7 +53,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
         ) {
             Spacer(modifier = Modifier.padding(24.dp))
             Text(
-                "Login to Food Delivery",
+                stringResource(R.string.login_title),
                 fontSize = 24.sp,
                 color = colorResource(R.color.orange),
                 fontWeight = FontWeight.ExtraBold,
@@ -68,8 +69,8 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                 TextField(
                     value = email,
                     onValueChange = { email = it },
-                    label = { Text("Email") },
-                    placeholder = { Text("Enter email") },
+                    label = { Text(stringResource(R.string.email)) },
+                    placeholder = { Text(stringResource(R.string.enter_email)) },
                     modifier = Modifier.size(350.dp, 60.dp),
                     leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) }
                 )
@@ -77,8 +78,8 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                 TextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Password") },
-                    placeholder = { Text("Enter Password") },
+                    label = { Text(stringResource(R.string.password)) },
+                    placeholder = { Text(stringResource(R.string.enter_password)) },
                     modifier = Modifier.size(350.dp, 60.dp),
                     leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
                     trailingIcon = {
@@ -93,7 +94,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                 )
                 Spacer(modifier = Modifier.padding(8.dp))
                 Text(
-                    "Forgot Password?",
+                    stringResource(R.string.forgot_password),
                     textAlign = TextAlign.Right,
                     modifier = Modifier.fillMaxWidth(),
                     color = colorResource(R.color.orange),
@@ -107,11 +108,11 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.orange)),
                     enabled = authState !is AuthState.Loading
                 ) {
-                    Text("Continue")
+                    Text(stringResource(R.string.continue_button), color = Color.White)
                 }
             }
             Text(
-                "or",
+                stringResource(R.string.or),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White
@@ -144,7 +145,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                             modifier = Modifier.weight(1f)
                         )
                         Text(
-                            "Continue with Google",
+                            stringResource(R.string.continue_with_google),
                             fontSize = 24.sp,
                             fontWeight = FontWeight.ExtraBold,
                             color = Color.Black,
@@ -157,7 +158,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Text(
-                    "Don’t have a Food Delivery account?",
+                    stringResource(R.string.dont_have_account),
                     textAlign = TextAlign.Right, color = Color.White,
                 )
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -169,7 +170,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.orange))
                 ) {
                     Text(
-                        "Sign up",
+                        stringResource(R.string.sign_up),
                         color = Color.White,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.ExtraBold

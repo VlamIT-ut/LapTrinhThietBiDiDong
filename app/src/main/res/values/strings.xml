@@ -4,6 +4,7 @@
     <string name="app_name" translatable="false">AppFood</string>
     <string name="splashSubtitle" translatable="false">Shared and delightful,for an easy and
     enjoyable food ordering experience</string>
+<!--    setting-->
     <string name="settings">Settings</string>
     <string name="change_language">Change Language</string>
     <string name="language_english">English</string>
@@ -11,5 +12,103 @@
     <string name="help">Help</string>
     <string name="request_account_deletion">Request Account Deletion</string>
     <string name="delete_account">Delete Account</string>
+<!--    login-signup -->
+    <string name="login_title">Login to Food Delivery</string>
+    <string name="signup_title">Sign up to Food Delivery</string>
+    <string name ="email">Email</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="continue_button">Continue</string>
+    <string name="or">Or</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="dont_have_account">Don’t have an account?</string>"
+<!--    cart -->
+    <string name="cart">Cart</string>
+    <string name="no_cart_items">No cart items yet!</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="information">Information</string>
+    <string name="place_order">Place Order</string>"
+    <string name="order">Order</string>
+<!--    cart summary -->
+    <string name="subtotal">SUBTOTAL: </string>
+    <string name="total_tax">Total Tax: </string>
+    <string name="delivery">Delivery: </string>
+    <string name="total">Total: </string>
+    <string name="total_price">Total Price: </string>
+<!--    notification -->
+    <string name="notification">Notification</string>
+<!-- address -->
+    <string name="your_delivery_address">Your Delivery Address</string>
+    <string name="geocoder">Geocoder</string>
+    <string name="choose_location">Choose Location</string>
+    <string name="location_not">Location not saved on map</string>
+<!--    payment -->
+    <string name="payment">Payment</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="cash_on_delivery">Cash on Delivery</string>"
+<!--    home -->
+    <string name="chose_category">Chose Category</string>
+    <string name="search">What would you like to eat</string>
+    <string name="detail">Details</string>
+    <string name="search_result">Search Result</string>
+    <string name="list_of_dishes">List of Dishes</string>
+<!--    about us -->
+    <string name="about_us">About Us</string>
+    <string name="description_about_us">Welcome to Food Delivery – your go-to food delivery app for fast, convenient, and reliable service! " +
+                        "Our mission is to connect you with the best restaurants, eateries, and street food vendors in town. " +
+                        "Whether you’re craving a quick snack, a hearty dinner, or a refreshing drink, Food Delivery is here to deliver."</string>
+    <string name="review_application">Review Application</string>
+    <string name="favorite">Favorite</string>
+    <string name="no_favorite_items">No favorite items yet!</string>
+<!--    help -->
+    <string name="help_and_faq">Help and FAQ</string>
+    <string name="faq_title">Frequently Asked Questions</string>
+    <string name="faq_question_1">How do I place an order?</string>
+    <string name="faq_answer_1">You can browse restaurants and dishes, then add your favorite items to the cart and proceed to checkout.</string>
+    <string name="faq_question_2">Can I cancel or change my order?</string>
+    <string name="faq_answer_2">Orders can only be changed or canceled before the restaurant confirms the order.</string>
+    <string name="faq_question_3">How can I track my delivery?</string>
+    <string name="faq_answer_3">After placing your order, go to "My Orders" to view real-time tracking updates.</string>
+    <string name="faq_question_4">What payment methods do you accept?</string>
+    <string name="faq_answer_4">We accept credit/debit cards, e-wallets like MoMo and ZaloPay, and cash on delivery.</string>
+<!--my order -->
+    <string name="my_order">My Orders</string>
+    <string name="no_order_items">No order items yet!</string>
+    <string name="canceled_order">Canceled Order</string>
+    <string name="order_canceled">Order was successfully canceled</string>
+<!--    profile -->
+    <string name="profile">Profile</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="contact_us">Contact Us</string>
+<!--    -->
+    <string name="back_to_home">Back to home</string>
+    <string name="order_placed_successfully">Order Placed Successfully!</string>
+    <string name="address">Address</string>
+    <string name="search_address">Search Address</string>
+    <string name="reset_map">Reset Map</string>
+    <string name="confirm_location">Confirm Location</string>
+<!--    splash-->
+    <string name="skip">skip</string>
+    <string name="title_getstarted1">Order Easily, Anytime, Anywhere</string>
+    <string name="title_getstarted2">Endless Choices, Lightning-Fast Delivery</string>
+    <string name="title_getstarted3">Track Orders, Unlock Amazing Offers</string>
+    <string name="subtitle_getstarted1">Just a few taps, and your favorite food is on its way, no matter where you are or what time it is</string>
+    <string name="subtitle_getstarted2">Explore thousands of food options from your favorite restaurants,delivered to your doorstep in no time with just a few taps</string>
+    <string name="subtitle_getstarted3">Know where your food is with real-time tracking and enjoy exclusive deals to make every order even more rewarding</string>
+    <string name="next">Next</string>
+    <string name="please_select_reason">Please select reason for your order:</string>
+    <string name="wrong_order">Wrong order</string>
+    <string name="long_delivery_time">Long delivery time</string>
+    <string name="change_of_mind">Change of mind</string>
+    <string name="high_price">High price</string>
+    <string name="other_reasons">Other reasons</string>
+    <string name="confirm_cancellation">Confirm cancellation</string>
+
 </resources>
 
