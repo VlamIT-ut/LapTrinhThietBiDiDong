@@ -31,8 +31,7 @@ import com.example.appfood.view.helper.ManagementCart
 import com.example.appfood.viewModel.LocationViewModel
 import com.example.appfood.viewModel.NotificationViewModel
 import com.google.firebase.auth.FirebaseAuth
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.appfood.view.helper.formatAsString
 @Composable
 fun DeliveryInfoBox(
     navController: NavController,
@@ -91,37 +90,60 @@ fun DeliveryInfoBox(
     val context = LocalContext.current
     val orderRepo = remember { OrderRepository() }
 
+    // Get string resources in Composable context
+    val successTitle = stringResource(R.string.order_success_title)
+    val successTime = stringResource(R.string.order_success_time)
+    val successTotal = stringResource(R.string.order_success_total)
+    val successAddress = stringResource(R.string.order_success_address)
+    val successPayment = stringResource(R.string.order_success_payment)
+    val successToast = stringResource(R.string.order_success_toast)
+    val failedToast = stringResource(R.string.order_failed_toast)
+    val loginToast = stringResource(R.string.login_required_toast)
+    val locationNot = stringResource(R.string.location_not)
+    val orderedFoodsLabel = stringResource(R.string.ordered_foods)
+
     Button(
         onClick = {
             val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
             if (currentUserId != null) {
+                val totalOrder = managementCart.getTotalFee() + tax + 10.0
                 val order = OrderModel(
                     userId = currentUserId,
                     items = managementCart.getListCart(),
-                    total = managementCart.getTotalFee(),
+                    total = totalOrder,
                     tax = tax,
                     deliveryFee = 10.0,
                     paymentMethod = selectedMethod,
-                    address = locationViewModel.selectedAddress ?: "No address",
+                    address = locationViewModel.selectedAddress ?: locationNot,
                     latitude = locationViewModel.selectedPoint?.latitude ?: 0.0,
                     longitude = locationViewModel.selectedPoint?.longitude ?: 0.0
                 )
 
                 orderRepo.saveOrder(order) { success ->
                     if (success) {
-                        val message = "🎉 Đơn hàng mới đã được đặt lúc ${System.currentTimeMillis().formatAsTimeString()}!"
-                        notificationViewModel.addNotification(message) // Sẽ trigger cả in-app và system notification
+                        val orderTime = System.currentTimeMillis().formatAsString()
+                        val foodNames = managementCart.getListCart().joinToString(separator = "\n- ") { it.Title }
+                        val message = """
+$successTitle
+🕒 $orderTime
+💰 ${successTotal.format(totalOrder.toString())}
+📍 ${successAddress.format(locationViewModel.selectedAddress ?: locationNot)}
+💳 ${successPayment.format(selectedMethod)}
+🍽️ $orderedFoodsLabel:
+- $foodNames
+""".trimIndent()
+                        notificationViewModel.addNotification(message)
 
-                        Toast.makeText(context, "Order placed successfully!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, successToast, Toast.LENGTH_SHORT).show()
                         navController.navigate("success")
                     }
                     else {
-                        Toast.makeText(context, "Failed to place order!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, failedToast, Toast.LENGTH_SHORT).show()
                     }
                 }
 
             } else {
-                Toast.makeText(context, "You are not logged in!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, loginToast, Toast.LENGTH_SHORT).show()
             }
         },
         shape = RoundedCornerShape(10.dp),
@@ -242,8 +264,4 @@ fun PaymentOptionRow(
             )
         )
     }
-}
-fun Long.formatAsTimeString(): String {
-    val sdf = SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.getDefault())
-    return sdf.format(Date(this))
 }

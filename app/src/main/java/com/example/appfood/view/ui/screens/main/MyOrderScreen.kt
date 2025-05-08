@@ -100,6 +100,7 @@ fun MyOrderScreen(
     }
 }
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun OrderItem(order: OrderModel, navController: NavController) {
     val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
@@ -111,7 +112,7 @@ fun OrderItem(order: OrderModel, navController: NavController) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text("Order ID: ${order.orderId}", fontWeight = FontWeight.Bold)
-            Text("Total: $${order.total}", color = Color.DarkGray)
+            Text("Total: $${String.format("%.2f", order.total)}", color = Color.DarkGray)
             Text("Payment: ${order.paymentMethod}")
             Text("Address: ${order.address}")
             Text("Time: $dateString", style = MaterialTheme.typography.labelSmall)

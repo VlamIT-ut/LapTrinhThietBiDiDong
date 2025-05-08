@@ -39,6 +39,10 @@ fun DeliveryLocationScreen(
     remember { LocationServices.getFusedLocationProviderClient(context) }
     val coroutineScope = rememberCoroutineScope()
 
+    LaunchedEffect(Unit) {
+        locationViewModel.loadAddressFromFirebase()
+    }
+
     Scaffold(
         modifier = Modifier.statusBarsPadding(),
         topBar = {
@@ -110,7 +114,12 @@ fun DeliveryLocationScreen(
                     }) {
                         Text(stringResource(R.string.reset_map))
                     }
-                    Button(onClick = { navController.popBackStack() }) {
+                    Button(onClick = {
+                        locationViewModel.saveAddressToFirebase { success ->
+                            // Có thể báo Toast nếu muốn
+                        }
+                        navController.popBackStack()
+                    }) {
                         Text(stringResource(R.string.confirm_location))
                     }
                 }
