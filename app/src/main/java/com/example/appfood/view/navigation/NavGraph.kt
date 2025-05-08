@@ -12,7 +12,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appfood.view.helper.ManagementCart
-import com.example.appfood.view.notification.NotificationScreen
 import com.example.appfood.view.ui.screens.main.ItemsListScreen
 import com.example.appfood.view.ui.screens.main.HomeScreen
 import com.example.appfood.view.ui.screens.login_signup.LoginScreen
@@ -38,6 +37,7 @@ import com.example.appfood.viewModel.MainViewModel
 import com.example.appfood.viewModel.NotificationViewModel
 import com.example.appfood.viewModel.OrderViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfood.view.notification.NotificationScreen
 import com.example.appfood.view.ui.screens.main.CancelOrderReasonScreen
 import kotlinx.coroutines.delay
 
@@ -142,7 +142,7 @@ fun AppNavigation(authViewModel: AuthViewModel,mainViewModel: MainViewModel) {
 
         composable("about") { AboutScreen(navController) }
         composable("help"){ HelpAndFaqScreen(navController) }
-        composable("notification"){ NotificationScreen(navController,notificationViewModel) }
+        composable("notification"){NotificationScreen(navController)}
         composable("cancel_order/{orderId}") { backStackEntry ->
             val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
             CancelOrderReasonScreen(orderId = orderId, navController = navController)

@@ -1,5 +1,6 @@
 package com.example.appfood.view.navigation
 
+import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -22,12 +24,18 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.appfood.R
+import com.example.appfood.model.data.factory.NotificationViewModelFactory
 import com.example.appfood.viewModel.NotificationViewModel
 @Composable
-fun TopBar(navController: NavController,
-           notificationViewModel: NotificationViewModel){
+fun TopBar(navController: NavController){
+    val notificationViewModel: NotificationViewModel = viewModel(
+        factory = NotificationViewModelFactory(
+            LocalContext.current.applicationContext as Application
+        )
+    )
     val unreadCount by notificationViewModel.unreadCount
 
     ConstraintLayout (

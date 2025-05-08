@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,7 +45,8 @@ fun CancelOrderReasonScreen(
     viewModel: OrderViewModel = viewModel()
 ) {
     var selectedReason by remember { mutableStateOf<String?>(null) }
-    val reasons = listOf("Wrong order", "Long delivery time", "Change of mind", "High price", "Other reasons")
+    val reasons = listOf(stringResource(R.string.wrong_order), stringResource(R.string.long_delivery_time),
+        stringResource(R.string.change_of_mind), stringResource(R.string.high_price), stringResource(R.string.other_reasons))
 
     Scaffold(
         modifier = Modifier.fillMaxSize().statusBarsPadding(),
@@ -59,7 +61,7 @@ fun CancelOrderReasonScreen(
                     modifier = Modifier.clickable { navController.popBackStack() }
                 )
                 Text(
-                    text = "Cancel order",
+                    stringResource(R.string.canceled_order),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.orange),
@@ -77,7 +79,7 @@ fun CancelOrderReasonScreen(
             .padding(padding)
             .padding(16.dp)) {
 
-            Text("Please select reason for your order:", fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.please_select_reason), fontWeight = FontWeight.Bold)
 
             Spacer(modifier = Modifier.height(8.dp))
             reasons.forEach { reason ->
@@ -109,7 +111,7 @@ fun CancelOrderReasonScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.orange),
                         contentColor = colorResource(R.color.white))
             ) {
-                Text("Confirm cancellation")
+                Text(stringResource(R.string.confirm_cancellation))
             }
         }
     }

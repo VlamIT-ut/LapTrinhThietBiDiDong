@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -64,7 +65,7 @@ fun GetStartedScreen2(navController: NavController) {
 
             // Skip button
             Text(
-                text = "skip",
+               stringResource(R.string.skip),
                 color = colorResource(R.color.orange),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
@@ -82,7 +83,7 @@ fun GetStartedScreen2(navController: NavController) {
 
             // Tiêu đề
             Text(
-                text = "Endless Choices, Lightning-Fast Delivery",
+                stringResource(R.string.title_getstarted2),
                 fontSize = 20.sp,
                 color = colorResource(R.color.orange),
                 fontWeight = FontWeight.Bold,
@@ -93,8 +94,7 @@ fun GetStartedScreen2(navController: NavController) {
 
             // Nội dung mô tả
             Text(
-                text = "Explore thousands of food options from your favorite restaurants," +
-                        " delivered to your doorstep in no time with just a few taps",
+               stringResource(R.string.subtitle_getstarted2),
                 fontSize = 14.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center,
@@ -114,7 +114,7 @@ fun GetStartedScreen2(navController: NavController) {
                 Button(onClick = {navController.navigate("get_started_3")}, modifier = Modifier.fillMaxWidth().height(56.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.orange),
                         contentColor = Color.White),) {
-                    Text(text = "Next", fontSize = 16.sp, color = Color.White)
+                    Text(stringResource(R.string.next), fontSize = 16.sp, color = Color.White)
                 }
             }
         }

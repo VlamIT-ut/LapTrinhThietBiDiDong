@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -69,16 +70,14 @@ fun AboutScreen(navController: NavController) {
                 .padding(16.dp)
         ) {
             Text(
-                text = "About Us",
+               stringResource(R.string.about_us),
                 color = Color.Red,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Welcome to Food Delivery – your go-to food delivery app for fast, convenient, and reliable service! " +
-                        "Our mission is to connect you with the best restaurants, eateries, and street food vendors in town. " +
-                        "Whether you’re craving a quick snack, a hearty dinner, or a refreshing drink, Food Delivery is here to deliver.",
+                stringResource(R.string.description_about_us),
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -86,7 +85,7 @@ fun AboutScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Review Application",
+                   stringResource(R.string.review_application),
                     color = Color.Red,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold

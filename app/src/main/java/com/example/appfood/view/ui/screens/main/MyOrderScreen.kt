@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -61,7 +62,7 @@ fun MyOrderScreen(
                                 modifier = Modifier.clickable { navController.popBackStack() }
                             )
                             Text(
-                                text = "My Orders ",
+                                stringResource(R.string.my_order),
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = colorResource(R.color.orange),
@@ -86,7 +87,7 @@ fun MyOrderScreen(
                             .padding(innerPadding),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("No Place order items yet!")
+                        Text(stringResource(R.string.no_order_items))
                     }
                 }
             } else {
@@ -135,13 +136,13 @@ fun OrderItem(order: OrderModel, navController: NavController) {
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                     ) {
-                        Text("Cancel order", color = Color.White)
+                        Text(stringResource(R.string.canceled_order), color = Color.White)
                     }
                 }
             } else {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    "Order was successfully canceled",
+                    stringResource(R.string.order_canceled),
                     color = Color.Red,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.End)

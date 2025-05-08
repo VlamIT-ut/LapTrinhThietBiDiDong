@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -48,20 +49,20 @@ import com.google.accompanist.insets.ui.TopAppBar
 fun HelpAndFaqScreen(navController: NavController) {
     val faqItems = listOf(
         FaqItem(
-            "How do I place an order?",
-            "You can browse restaurants and dishes, then add your favorite items to the cart and proceed to checkout."
+            stringResource(R.string.faq_question_1),
+            stringResource(R.string.faq_answer_1)
         ),
         FaqItem(
-            "Can I cancel or change my order?",
-            "Orders can only be changed or canceled before the restaurant confirms the order."
+            stringResource(R.string.faq_question_2),
+            stringResource(R.string.faq_answer_2)
         ),
         FaqItem(
-            "How can I track my delivery?",
-            "After placing your order, go to 'My Orders' to view real-time tracking updates."
+            stringResource(R.string.faq_question_3),
+            stringResource(R.string.faq_answer_3)
         ),
         FaqItem(
-            "What payment methods do you accept?",
-            "We accept credit/debit cards, e-wallets like MoMo and ZaloPay, and cash on delivery."
+            stringResource(R.string.faq_question_4),
+            stringResource(R.string.faq_answer_4)
         )
     )
 
@@ -78,7 +79,7 @@ fun HelpAndFaqScreen(navController: NavController) {
                     modifier = Modifier.clickable { navController.popBackStack() }
                 )
                 Text(
-                    text = "Help & FAQ",
+                   stringResource(R.string.help_and_faq),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.orange),
@@ -100,7 +101,7 @@ fun HelpAndFaqScreen(navController: NavController) {
         ) {
             item {
                 Text(
-                    text = "Frequently Asked Questions",
+                   stringResource(R.string.faq_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 12.dp)

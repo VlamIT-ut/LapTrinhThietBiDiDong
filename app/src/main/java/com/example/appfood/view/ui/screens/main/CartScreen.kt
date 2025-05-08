@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -83,7 +84,7 @@ fun CartScreen(navController: NavController,
                     modifier = Modifier.clickable { navController.popBackStack() }
                 )
                 Text(
-                    text = "Cart",
+                    stringResource(R.string.cart),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.orange),
@@ -109,7 +110,7 @@ fun CartScreen(navController: NavController,
                                 .padding(innerPadding),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("No cart items yet!")
+                            Text(stringResource(R.string.no_cart_items))
                         }
                     }
                 } else {
@@ -126,7 +127,7 @@ fun CartScreen(navController: NavController,
                     }
                     item {
                         Text(
-                            text = "Order Summary",
+                            text = stringResource(R.string.order_summary),
                             color = colorResource(R.color.darkPurple),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
@@ -142,7 +143,7 @@ fun CartScreen(navController: NavController,
                     }
                     item {
                         Text(
-                            text = "Information",
+                            text = stringResource(R.string.information),
                             color = colorResource(R.color.darkPurple),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,

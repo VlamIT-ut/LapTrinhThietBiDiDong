@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,8 +24,8 @@ import com.example.appfood.view.dashboard.*
 import com.example.appfood.view.navigation.MyBottomBar
 import com.example.appfood.view.navigation.TopBar
 import com.example.appfood.viewModel.MainViewModel
-import com.example.appfood.viewModel.NotificationViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfood.R
 import com.example.appfood.model.data.local.UserPreferences
 import kotlinx.coroutines.launch
 
@@ -36,8 +38,6 @@ fun HomeScreen(navController: NavController) {
     val categories = remember { mutableStateListOf<CategoryModel>() }
     var showBannerLoading by remember { mutableStateOf(true) }
     var showCategoryLoading by remember { mutableStateOf(true) }
-    val notificationViewModel: NotificationViewModel = viewModel()
-
     val foodList by viewModel.foodList.collectAsState()
 
     var searchText by remember { mutableStateOf("") }
@@ -75,7 +75,7 @@ fun HomeScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding(),
-        topBar = { TopBar(navController, notificationViewModel) },
+        topBar = { TopBar(navController) },
         bottomBar = { MyBottomBar(navController) },
         content = { innerPadding ->
             LazyColumn(
@@ -100,7 +100,7 @@ fun HomeScreen(navController: NavController) {
                 }
                 item {
                     Text(
-                        text = if (searchText.isNotEmpty()) "Search results" else "List of dishes",
+                        text = if (searchText.isNotEmpty()) stringResource(R.string.search_result) else stringResource(R.string.list_of_dishes),
                         modifier = Modifier.padding(16.dp),
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp

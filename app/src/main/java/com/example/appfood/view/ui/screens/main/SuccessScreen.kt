@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -20,7 +21,7 @@ import com.example.appfood.R
 fun SuccessScreen(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Order Placed Successfully!", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.order_placed_successfully), fontSize = 22.sp, fontWeight = FontWeight.Bold)
 
             Button(
                 onClick = { navController.navigate("home") },
@@ -28,7 +29,7 @@ fun SuccessScreen(navController: NavController) {
                     containerColor = colorResource(R.color.orange)
                 )
             ) {
-                Text("Back to Home", color = Color.White)
+                Text(stringResource(R.string.back_to_home), color = Color.White)
             }
 
             Button(
@@ -37,7 +38,7 @@ fun SuccessScreen(navController: NavController) {
                     containerColor = colorResource(R.color.orange)
                 )
             ) {
-                Text("My Orders", color = Color.White)
+                Text(stringResource(R.string.my_order), color = Color.White)
             }
         }
     }

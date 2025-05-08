@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -48,7 +49,7 @@ fun Search(
         },
         label = {
             Text(
-                text = "What would you like to eat",
+                stringResource(R.string.search),
                 fontStyle = FontStyle.Italic,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.DarkGray
