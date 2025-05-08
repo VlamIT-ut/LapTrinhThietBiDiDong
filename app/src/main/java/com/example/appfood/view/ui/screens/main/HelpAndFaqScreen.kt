@@ -79,7 +79,7 @@ fun HelpAndFaqScreen(navController: NavController) {
                     modifier = Modifier.clickable { navController.popBackStack() }
                 )
                 Text(
-                    text = "Help & FAQ",
+                   stringResource(R.string.help_and_faq),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.orange),
@@ -101,7 +101,7 @@ fun HelpAndFaqScreen(navController: NavController) {
         ) {
             item {
                 Text(
-                    text = "Frequently Asked Questions",
+                   stringResource(R.string.faq_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 12.dp)
