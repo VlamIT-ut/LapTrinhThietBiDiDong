@@ -106,10 +106,11 @@ fun DeliveryInfoBox(
         onClick = {
             val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
             if (currentUserId != null) {
+                val totalOrder = managementCart.getTotalFee() + tax + 10.0
                 val order = OrderModel(
                     userId = currentUserId,
                     items = managementCart.getListCart(),
-                    total = managementCart.getTotalFee(),
+                    total = totalOrder,
                     tax = tax,
                     deliveryFee = 10.0,
                     paymentMethod = selectedMethod,
@@ -125,7 +126,7 @@ fun DeliveryInfoBox(
                         val message = """
 $successTitle
 🕒 $orderTime
-💰 ${successTotal.format(managementCart.getTotalFee().toString())}
+💰 ${successTotal.format(totalOrder.toString())}
 📍 ${successAddress.format(locationViewModel.selectedAddress ?: locationNot)}
 💳 ${successPayment.format(selectedMethod)}
 🍽️ $orderedFoodsLabel:
