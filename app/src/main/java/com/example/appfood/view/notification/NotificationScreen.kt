@@ -47,30 +47,46 @@ fun NotificationScreen(navController: NavController) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize().statusBarsPadding(),
-        topBar = {TopAppBar(title = { Box(modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center){
-            Row(verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()) {
-                Image(
-                    painterResource(R.drawable.back_grey),
-                    contentDescription = null,
-                    modifier = Modifier.clickable { navController.popBackStack() }
-                )
-                Text(
-                    stringResource(R.string.notification),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(R.color.orange),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f))
-                Spacer(modifier = Modifier.width(48.dp))
-            }
-
-        }
+        topBar = {
+            TopAppBar(
+                title = {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Image(
+                                painterResource(R.drawable.back_grey),
+                                contentDescription = null,
+                                modifier = Modifier.clickable { navController.popBackStack() }
+                            )
+                            Text(
+                                stringResource(R.string.notification),
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = colorResource(R.color.orange),
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.weight(1f)
+                            )
+                            // Icon xóa thông báo
+                            IconButton(onClick = { notificationViewModel.clearAllNotifications() }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.i_delete),
+                                    contentDescription = stringResource(R.string.delete_account),
+                                    tint = Color.Red,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        }
+                    }
+                },
+                backgroundColor = colorResource(R.color.white)
+            )
         },
-            backgroundColor = colorResource(R.color.white)
-        ) },
     ) { padding ->
         LazyColumn(
             modifier = Modifier

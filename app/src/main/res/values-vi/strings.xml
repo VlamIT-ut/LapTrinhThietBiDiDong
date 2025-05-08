@@ -102,5 +102,13 @@
     <string name="high_price">Giá cao</string>
     <string name="other_reasons">Lý do khác</string>
     <string name="confirm_cancellation">Xác nhận hủy đơn hàng</string>
-
+    <string name="order_success_title">Đặt hàng thành công!</string>
+    <string name="order_success_time">Thời gian: %1$s</string>
+    <string name="order_success_total">Tổng tiền: %1$sđ</string>
+    <string name="order_success_address">Địa chỉ: %1$s</string>
+    <string name="order_success_payment">Phương thức thanh toán: %1$s</string>
+    <string name="order_success_toast">Đặt hàng thành công!</string>
+    <string name="order_failed_toast">Đặt hàng thất bại! Vui lòng thử lại.</string>
+    <string name="login_required_toast">Vui lòng đăng nhập để đặt hàng!</string>
+    <string name="ordered_foods">Món đã đặt</string>
 </resources>

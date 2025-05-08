@@ -109,6 +109,15 @@
     <string name="high_price">High price</string>
     <string name="other_reasons">Other reasons</string>
     <string name="confirm_cancellation">Confirm cancellation</string>
+    <string name="order_success_title">New Order Placed Successfully!</string>
+    <string name="order_success_time">Time: %1$s</string>
+    <string name="order_success_total">Total: %1$s$</string>
+    <string name="order_success_address">Address: %1$s</string>
+    <string name="order_success_payment">Payment Method: %1$s</string>
+    <string name="order_success_toast">Order placed successfully!</string>
+    <string name="order_failed_toast">Failed to place order! Please try again.</string>
+    <string name="login_required_toast">Please login to place an order!</string>
+    <string name="ordered_foods">Ordered foods</string>
 
 </resources>
 

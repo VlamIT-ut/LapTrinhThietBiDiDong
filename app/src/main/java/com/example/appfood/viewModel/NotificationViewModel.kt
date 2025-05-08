@@ -1,26 +1,30 @@
 package com.example.appfood.viewModel
 
 import android.app.Application
-import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.appfood.view.helper.NotificationHelper
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 class NotificationViewModel(application: Application) : AndroidViewModel(application) {
     private val _notifications = MutableStateFlow<List<String>>(emptyList())
     private val _unreadCount = mutableStateOf(0)
     private val notificationHelper = NotificationHelper(application.applicationContext)
-    private val sharedPrefs = application.getSharedPreferences("notifications", Context.MODE_PRIVATE)
+    private var lastNotificationCount = 0
 
     val notifications = _notifications.asStateFlow()
     val unreadCount: State<Int> = _unreadCount
+
+    private val userId: String? = FirebaseAuth.getInstance().currentUser?.uid
+    private val notifRef: DatabaseReference? = userId?.let {
+        FirebaseDatabase.getInstance().getReference("notifications").child(it)
+    }
 
     init {
         loadNotifications()
@@ -28,35 +32,39 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
 
     fun addNotification(message: String) {
         viewModelScope.launch {
-            val formattedMessage = "${getCurrentTime()} - $message"
-            val newList = listOf(formattedMessage) + _notifications.value
-            _notifications.value = newList
-            _unreadCount.value += 1
-
-            // Save to SharedPreferences
-            sharedPrefs.edit().apply {
-                putStringSet("notifications", newList.toSet())
-                putInt("unread_count", _unreadCount.value)
-                apply()
+            notifRef?.let { ref ->
+                val notifId = ref.push().key ?: System.currentTimeMillis().toString()
+                ref.child(notifId).setValue(message)
+                notificationHelper.showNotification("Food Delivery", message)
             }
-
-            notificationHelper.showNotification("Food Delivery", message)
         }
     }
 
     private fun loadNotifications() {
-        val savedNotifications = sharedPrefs.getStringSet("notifications", emptySet()) ?: emptySet()
-        _notifications.value = savedNotifications.toList().sortedByDescending { it }
-        _unreadCount.value = sharedPrefs.getInt("unread_count", 0)
+        notifRef?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = mutableListOf<String>()
+                for (child in snapshot.children) {
+                    child.getValue(String::class.java)?.let { list.add(it) }
+                }
+                if (list.size > lastNotificationCount) {
+                    _unreadCount.value += (list.size - lastNotificationCount)
+                }
+                lastNotificationCount = list.size
+                _notifications.value = list.reversed()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    fun clearAllNotifications() {
+        notifRef?.removeValue()
+        _notifications.value = emptyList()
+        _unreadCount.value = 0
     }
 
     fun markAllAsRead() {
         _unreadCount.value = 0
-        sharedPrefs.edit().putInt("unread_count", 0).apply()
-    }
-
-    private fun getCurrentTime(): String {
-        val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        return sdf.format(Date())
+        lastNotificationCount = _notifications.value.size
     }
 }
