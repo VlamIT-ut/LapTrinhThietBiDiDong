@@ -3,7 +3,6 @@ package com.example.appfood.view.navigation
 import com.example.appfood.view.ui.screens.map.DeliveryLocationScreen
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -39,41 +38,24 @@ import com.example.appfood.viewModel.OrderViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appfood.view.notification.NotificationScreen
 import com.example.appfood.view.ui.screens.main.CancelOrderReasonScreen
-import kotlinx.coroutines.delay
 
 @Composable
-fun AppNavigation(authViewModel: AuthViewModel,mainViewModel: MainViewModel) {
+fun AppNavigation(authViewModel: AuthViewModel, mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     val locationViewModel = LocationViewModel()
     val orderViewModel = OrderViewModel()
     val isLoggedIn = authViewModel.isLoggedIn.collectAsState(initial = false).value
     val isFirstLaunch = authViewModel.isFirstLaunch.collectAsState(initial = true).value
-    val startDestination = if (isFirstLaunch) "welcome" else if (isLoggedIn) "home" else "login"
     val notificationViewModel: NotificationViewModel = viewModel()
 
-
-    NavHost(navController = navController,startDestination = startDestination ) {
+    // Luôn start từ splash
+    NavHost(navController = navController, startDestination = "welcome") {
         composable("welcome") {
-            // Màn Splash chỉ hiển thị lần đầu
-            SplashScreen(navController)
-
-            LaunchedEffect(Unit) {
-                delay(1500)
-                if (isFirstLaunch) {
-                    authViewModel.completeFirstLaunch()
-                    navController.navigate("get_started_1")
-                } else {
-                    navController.navigate("login") {
-                        popUpTo("welcome") { inclusive = true }
-                    }
-                }
-            }
-
-
+            SplashScreen(navController, isFirstLaunch, isLoggedIn, authViewModel)
         }
         composable("get_started_1") { GetStartedScreen1(navController) }
         composable("get_started_2") { GetStartedScreen2(navController) }
-        composable("get_started_3") { GetStartedScreen3(navController) }
+        composable("get_started_3") { GetStartedScreen3(navController, authViewModel) }
         composable("login") { LoginScreen(navController, authViewModel) }
         composable("sign_up") { SignUpScreen(navController, authViewModel) }
         composable("home") { HomeScreen(navController) }

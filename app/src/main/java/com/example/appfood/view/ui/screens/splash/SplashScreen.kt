@@ -25,13 +25,32 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import com.example.appfood.R
-import kotlinx.coroutines.delay
+import com.example.appfood.viewModel.AuthViewModel
 
 @Composable
-fun SplashScreen(navController: NavController){
-    LaunchedEffect(Unit) {
-        delay(5000) // 2 s
-        navController.navigate("get_started_1")
+fun SplashScreen(
+    navController: NavController,
+    isFirstLaunch: Boolean,
+    isLoggedIn: Boolean,
+    authViewModel: AuthViewModel
+) {
+    LaunchedEffect(isFirstLaunch, isLoggedIn) {
+        kotlinx.coroutines.delay(1500)
+        if (isFirstLaunch) {
+            navController.navigate("get_started_1") {
+                popUpTo("welcome") { inclusive = true }
+            }
+        } else {
+            if (isLoggedIn) {
+                navController.navigate("home") {
+                    popUpTo("welcome") { inclusive = true }
+                }
+            } else {
+                navController.navigate("login") {
+                    popUpTo("welcome") { inclusive = true }
+                }
+            }
+        }
     }
     Column(modifier = Modifier
         .fillMaxSize()
