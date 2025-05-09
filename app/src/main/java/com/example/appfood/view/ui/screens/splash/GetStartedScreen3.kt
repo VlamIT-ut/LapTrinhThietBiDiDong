@@ -32,9 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appfood.R
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfood.viewModel.AuthViewModel
 
 @Composable
-fun GetStartedScreen3(navController: NavController) {
+fun GetStartedScreen3(navController: NavController, authViewModel: AuthViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -69,7 +71,10 @@ fun GetStartedScreen3(navController: NavController) {
                 color = colorResource(R.color.orange),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.clickable { navController.navigate("login") },
+                modifier = Modifier.clickable {
+                    authViewModel.completeFirstLaunch()
+                    navController.navigate("login")
+                },
             )
         }
         Column (horizontalAlignment = Alignment.CenterHorizontally){
@@ -112,7 +117,10 @@ fun GetStartedScreen3(navController: NavController) {
 
             } }
             Row(modifier = Modifier.weight(4f)){
-                Button(onClick = {navController.navigate("login")}, modifier = Modifier.fillMaxWidth().height(56.dp),
+                Button(onClick = {
+                    authViewModel.completeFirstLaunch()
+                    navController.navigate("login")
+                }, modifier = Modifier.fillMaxWidth().height(56.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.orange),
                         contentColor = Color.White),) {
                     Text(stringResource(R.string.next), fontSize = 16.sp, color = Color.White)
