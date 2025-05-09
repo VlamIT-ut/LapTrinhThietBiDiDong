@@ -104,7 +104,7 @@
     <string name="confirm_cancellation">Xác nhận hủy đơn hàng</string>
     <string name="order_success_title">Đặt hàng thành công!</string>
     <string name="order_success_time">Thời gian: %1$s</string>
-    <string name="order_success_total">Tổng tiền: %1$sđ</string>
+    <string name="order_success_total">Tổng tiền: %1$s$</string>
     <string name="order_success_address">Địa chỉ: %1$s</string>
     <string name="order_success_payment">Phương thức thanh toán: %1$s</string>
     <string name="order_success_toast">Đặt hàng thành công!</string>

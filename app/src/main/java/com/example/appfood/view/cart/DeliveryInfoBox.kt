@@ -32,6 +32,14 @@ import com.example.appfood.viewModel.LocationViewModel
 import com.example.appfood.viewModel.NotificationViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.example.appfood.view.helper.formatAsString
+
+// Thêm enum cho phương thức thanh toán
+enum class PaymentMethod(val code: String) {
+    MOMO("momo"),
+    VNPAY("vnpay"),
+    COD("cod")
+}
+
 @Composable
 fun DeliveryInfoBox(
     navController: NavController,
@@ -40,7 +48,7 @@ fun DeliveryInfoBox(
     locationViewModel: LocationViewModel = viewModel(),
     notificationViewModel: NotificationViewModel = viewModel()
 ) {
-    var selectedMethod by rememberSaveable { mutableStateOf("Momo") }
+    var selectedMethod by rememberSaveable { mutableStateOf(PaymentMethod.MOMO.code) }
 
     Column(
         modifier = Modifier
@@ -123,10 +131,11 @@ fun DeliveryInfoBox(
                     if (success) {
                         val orderTime = System.currentTimeMillis().formatAsString()
                         val foodNames = managementCart.getListCart().joinToString(separator = "\n- ") { it.Title }
+                        val formattedTotal = String.format("%.2f", totalOrder)
                         val message = """
 $successTitle
 🕒 $orderTime
-💰 ${successTotal.format(totalOrder.toString())}
+💰 ${successTotal.format(formattedTotal)}
 📍 ${successAddress.format(locationViewModel.selectedAddress ?: locationNot)}
 💳 ${successPayment.format(selectedMethod)}
 🍽️ $orderedFoodsLabel:
@@ -198,25 +207,28 @@ fun PaymentSection(
     Spacer(modifier = Modifier.height(4.dp))
 
     PaymentOptionRow(
-        method = "Momo",
+        methodCode = PaymentMethod.MOMO.code,
+        methodLabel = "Momo",
         selectedMethod = selectedMethod,
-        onSelected = { onMethodSelected("Momo") },
+        onSelected = onMethodSelected,
         icon = painterResource(id = R.drawable.ic_momo),
         navController = navController
     )
 
     PaymentOptionRow(
-        method = "VNPay",
+        methodCode = PaymentMethod.VNPAY.code,
+        methodLabel = "VNPay",
         selectedMethod = selectedMethod,
-        onSelected = { onMethodSelected("VNPay") },
+        onSelected = onMethodSelected,
         icon = painterResource(id = R.drawable.ic_vnpay),
         navController = navController
     )
 
     PaymentOptionRow(
-        method = stringResource(R.string.cash_on_delivery),
+        methodCode = PaymentMethod.COD.code,
+        methodLabel = stringResource(R.string.cash_on_delivery),
         selectedMethod = selectedMethod,
-        onSelected = { onMethodSelected("Cash on Delivery") },
+        onSelected = onMethodSelected,
         icon = painterResource(id = R.drawable.credit_card),
         navController = navController
     )
@@ -224,9 +236,10 @@ fun PaymentSection(
 
 @Composable
 fun PaymentOptionRow(
-    method: String,
+    methodCode: String,
+    methodLabel: String,
     selectedMethod: String,
-    onSelected: () -> Unit,
+    onSelected: (String) -> Unit,
     icon: Painter,
     navController: NavController
 ) {
@@ -235,28 +248,28 @@ fun PaymentOptionRow(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onSelected()
-                when (method) {
-                    "VNPay" -> navController.navigate("mock_vnpay_payment")
-                    "Momo" -> navController.navigate("mock_momo_login")
+                onSelected(methodCode)
+                when (methodCode) {
+                    PaymentMethod.VNPAY.code -> navController.navigate("mock_vnpay_payment")
+                    PaymentMethod.MOMO.code -> navController.navigate("mock_momo_login")
                 }
             }
             .padding(vertical = 4.dp)
     ) {
         Image(
             painter = icon,
-            contentDescription = method,
+            contentDescription = methodLabel,
             modifier = Modifier.size(32.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = method,
+            text = methodLabel,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.weight(1f)
         )
         RadioButton(
-            selected = selectedMethod == method,
+            selected = selectedMethod == methodCode,
             onClick = null,
             colors = RadioButtonDefaults.colors(
                 selectedColor = Color.Green,
