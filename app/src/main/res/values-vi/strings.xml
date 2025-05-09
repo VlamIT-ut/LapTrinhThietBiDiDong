@@ -56,9 +56,9 @@
 <!--    about us -->
     <string name="about_us">Về chúng tôi</string>
     <string name="review_application">Đánh giá ứng dụng</string>
-    <string name="description_about_us">Chào mừng đến với Food Delivery – ứng dụng giao đồ ăn nhanh chóng, tiện lợi và đáng tin cậy của bạn! " +
-"Sứ mệnh của chúng tôi là kết nối bạn với các nhà hàng, quán ăn và người bán đồ ăn đường phố tốt nhất trong thị trấn." +
-"Cho dù bạn đang thèm một bữa ăn nhẹ nhanh, một bữa tối thịnh soạn hay một thức uống giải khát, Food Delivery đều có mặt để giao hàng."
+    <string name="description_about_us">Chào mừng đến với Food Delivery – ứng dụng giao đồ ăn nhanh chóng, tiện lợi và đáng tin cậy của bạn!
+Sứ mệnh của chúng tôi là kết nối bạn với các nhà hàng, quán ăn và người bán đồ ăn đường phố tốt nhất trong thị trấn.
+Cho dù bạn đang thèm một bữa ăn nhẹ nhanh, một bữa tối thịnh soạn hay một thức uống giải khát, Food Delivery đều có mặt để giao hàng.
     </string>
     <string name="favorite">Yêu thích</string>
     <string name="no_favorite_items">Chưa có sản phẩm yêu thích!</string>

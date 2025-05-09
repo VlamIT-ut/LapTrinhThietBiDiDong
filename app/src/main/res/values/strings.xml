@@ -60,9 +60,8 @@
     <string name="list_of_dishes">List of Dishes</string>
 <!--    about us -->
     <string name="about_us">About Us</string>
-    <string name="description_about_us">Welcome to Food Delivery – your go-to food delivery app for fast, convenient, and reliable service! " +
-                        "Our mission is to connect you with the best restaurants, eateries, and street food vendors in town. " +
-                        "Whether you’re craving a quick snack, a hearty dinner, or a refreshing drink, Food Delivery is here to deliver."</string>
+    <string name="description_about_us">Welcome to Food Delivery – your go-to food delivery app for fast, convenient, and reliable service! Our mission is to connect you with the best restaurants, eateries, and street food vendors in town.
+        Whether you’re craving a quick snack, a hearty dinner, or a refreshing drink, Food Delivery is here to deliver.</string>
     <string name="review_application">Review Application</string>
     <string name="favorite">Favorite</string>
     <string name="no_favorite_items">No favorite items yet!</string>
