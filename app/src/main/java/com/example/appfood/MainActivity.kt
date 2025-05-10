@@ -1,6 +1,7 @@
 package com.example.appfood
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +19,7 @@ import com.example.appfood.model.data.repository.LoginRepository
 import com.example.appfood.view.ui.language.AppLanguageProvider
 import com.example.appfood.viewModel.MainViewModel
 import kotlinx.coroutines.launch
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : ComponentActivity() {
 
@@ -45,6 +47,15 @@ class MainActivity : ComponentActivity() {
 
         // Initialize userPreferences here to avoid null context issues
         userPreferences = UserPreferences(applicationContext)
+
+        // Lấy FCM token và log ra Logcat
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("FCM_TOKEN", "Token: ${task.result}")
+            } else {
+                Log.e("FCM_TOKEN", "Lấy token thất bại", task.exception)
+            }
+        }
 
         // Enable edge-to-edge display
         enableEdgeToEdge()
